@@ -1,8 +1,8 @@
 {
-  "name": "pickled",
+  "name": "Tasky",
   "version": "1.0.0",
   "description": "",
-  "main": "pickled.py",
+  "main": "server.py",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
