@@ -16,5 +16,8 @@
     "backbone": "~1.2.3",
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4"
+  },
+  "devDependencies": {
+    "lodash": "~3.10.1"
   }
 }

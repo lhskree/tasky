@@ -1,9 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home</title>
+	<title>Tasky</title>
+
+	<!-- Required Libraries -->
+	<script src="/static/bower_components/lodash/lodash.js"></script>
+	<script src="/static/bower_components/jquery/dist/jquery.js"></script>
+	<script src="/static/bower_components/backbone/backbone.js"></script>
+
+	<!-- Application Files -->
+
+	<!-- Routers -->
+	<script src="/static/scripts/routers.js"></script>
+
+	<!-- Models -->
+	<script src="/static/scripts/models/task.js"></script>
+
+	<!-- Views -->
+	<script src="/static/scripts/views/task.js"></script>
+	<script src="/static/scripts/views/home.js"></script>
+
+	<!-- Start the App -->
+	<script src="/static/scripts/init.js"></script>
+
+	<!-- Style -->
+	<link href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="/static/styles/main.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
-<h1>Hello from pickled!</h1>
+
+<div class="container" id="out">Oh hi</div>
+
 </body>
 </html>
+
+<script id="template-home" type="text/template">
+
+<div class="row">
+	<h1 class="text-center">Welcome to Tasky!</h1>
+	<h2 class="text-center">It looks like there is nothing here right now . . .</h2>
+	<div class="row">
+		<button class="btn btn-primary col-lg-2 col-lg-push-5 col-md-4 col-md-push-4 col-sm-4 col-sm-push-4 col-xs-12" id="newGroup">Add a New Task Group</button>
+	</div>
+
+	<div class="row" id="tasksGroups">
+
+	</div>
+
+</div>
+
+</script>
+
+<script id="template-task-group" type="text/template">
+
+
+</script>
