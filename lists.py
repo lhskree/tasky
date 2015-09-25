@@ -36,7 +36,7 @@ def lists():
 				temp = {}
 				for key in item:
 					if key == '_id':
-						temp[key] = str(item['_id'])
+						temp['oid'] = base64.b64encode(str(item['_id']))
 					else:
 						temp[key] = item[key]
 				body.append(temp)
@@ -62,6 +62,7 @@ def lists():
 
 		# Great jerb!		
 		if isinstance(write_result, ObjectId):
+			# Return the encoded oid to reference for the tasks
 			return json.jsonify({
 				"success" : True,
 				"oid" : base64.b64encode(str(write_result))
