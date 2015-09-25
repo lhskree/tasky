@@ -2,6 +2,7 @@ from app import app, mongo
 
 # Different endpoints
 import tasks
+import lists
 
 # Default routes
 @app.route('/')

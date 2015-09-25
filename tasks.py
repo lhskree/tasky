@@ -27,8 +27,20 @@ def tasks():
 	elif request.method == 'POST':
 		if request.headers['Content-Type'] == 'application/json':
 			body = request.json
-			mongo.db.tasks.insert(body)
-		return "POST REQUEST"
+			write_result = mongo.db.tasks.insert(body)
+
+		# Something bad happened
+		if write_result['writeError']:
+			return json.jsonify({
+				"code" : write_result["code"],
+				"errmsg" : write_result["errmsg"]
+				})
+		# All is well
+		else:
+			return json.jsonify({
+				"success" : True,
+				"documentsWritten" : write_result['nInsterted']
+				})
 
 	# PUT
 	elif request.method == 'PUT':
