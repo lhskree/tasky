@@ -4,4 +4,4 @@ from flask.ext.pymongo import PyMongo
 app = Flask(__name__)
 mongo = PyMongo(app)
 
-from app import routes
+import routes

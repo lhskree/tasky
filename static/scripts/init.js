@@ -2,8 +2,14 @@ var App = App || {};
 
 $(function () {
 
-	var router = new App.Router;
+	$.get('/static/templates.html', function (templates) {
 
-	Backbone.history.start();
+		$("body").append(templates);
+		
+		var router = new App.Router;
+
+		Backbone.history.start();
+
+	});
 
 });
