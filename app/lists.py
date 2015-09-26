@@ -34,6 +34,7 @@ def lists():
 				temp = {}
 				for key in item:
 					if key == '_id':
+						print(item[key])
 						temp['oid'] = base64.b64encode(str(item['_id']))
 					else:
 						temp[key] = item[key]
@@ -88,18 +89,19 @@ def single_list(oid):
 	elif request.method == 'PUT':
 		if request.headers['Content-Type'] == 'application/json':
 			body = request.json
+
+			# query by decoded oid
 			query = {}
-			query['_id'] = base64.b64decode(oid)
+			query['_id'] = ObjectId(base64.b64decode(oid))
+
+			#update each of the keys
+			# TODO update via patch for diff of keys
 			update = {}
 			update["$set"] = {}
 			for key in body:
 				update["$set"][key] = body[key]
-			print("Query::")
-			print(query)
-			print("Update::")
-			print(update)
-			result = mongo.app.lists.update_one(query, update)
-			return json.jsonify(result)
+			write_result = mongo.app.lists.update(query, update)
+			return json.jsonify(write_result)
 		# handle put with bad content-type
 		return False
 
