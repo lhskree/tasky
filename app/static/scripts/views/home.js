@@ -20,8 +20,12 @@ App.View.Home = Backbone.View.extend({
 		"click #newList" : "createNewList"
 	},
 
-	createNewGroup : function () {
+	createNewList : function () {
 		console.log("Making a new list . . .");
+		var list = new App.Model.List();
+		var listView = new App.View.List({
+			model : list
+		});
 	}
 
 });

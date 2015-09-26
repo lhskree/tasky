@@ -8,7 +8,8 @@ App.Model.List = Backbone.Model.extend({
 	defaults : {
 		"title" : "Click to Change the Title",
 		"order" : 0,
-		"tasks" = []
+		"tasks" : [],
+		"oid" : false
 	}
 
 })

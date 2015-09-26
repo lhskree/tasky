@@ -6,3 +6,15 @@ html, body {
 #out {
 	padding-top: 5vh;
 }
+
+.list {
+	width: 300px;
+}
+
+.list__options {
+	margin: 1em 0;
+}
+
+.tasks {
+	margin: .5em 0;
+}

@@ -7,7 +7,7 @@
 		<button class="btn btn-primary col-lg-2 col-lg-push-5 col-md-4 col-md-push-4 col-sm-4 col-sm-push-4 col-xs-12" id="newList">Add a New Task Group</button>
 	</div>
 
-	<div class="row" id="lists">
+	<div id="lists">
 
 	</div>
 
@@ -17,11 +17,19 @@
 
 <script id="template-list" type="text/x-handlebars-template">
 
-<div class="list">
-	<h2>{{title}}</h2>
-	
-	<div class="tasks">
+<div class="list" data-order="{{order}}" data-oid={{oid}}>
 
+	<input type="text" class="list__title col-lg-12" placeholder="{{title}}">
+	<div class="row list__options">
+		<button class="btn btn-success col-lg-9 list__options__save">Save</button>
+		<button class="btn col-lg-3 list__options__close"><span class="glyphicon glyphicon-remove"></span>
+	</div>
+
+	<div class="row tasks">
+		<button class="btn btn-primary tasks__new">New Task</button>
+		<div class="tasks__tasklist">
+
+		</div>
 	</div>
 </div>
 

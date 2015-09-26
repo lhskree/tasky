@@ -1,27 +1,37 @@
 var App = App || {};
 App.View = App.View || {};
 
-App.View.Home = Backbone.View.extend({
+App.View.List = Backbone.View.extend({
 
 	initialize : function () {
 		_.bindAll(this, "render");
-		this.template = Handlebars.compile($("#template-list").html());
+		this.template = Handlebars.compile($("#template-list").html())
 		this.render();
 	},
 
 	render : function () {
 		this.$el = $("#lists");
-		this.$el.html(this.template();
+		this.$el.append(this.template(this.model.toJSON()));
 		this.delegateEvents(this.events);
 		return this;
 	},
 
 	events : {
-		"click #newGroup" : "createNewGroup"
+		"click .list__options__save" : "saveList",
+		"click .list__options__close" : "hideListOptions",
+		"click .tasks__new" : "createNewTask"
 	},
 
-	createNewGroup : function () {
-		console.log("Making a new group . . .");
+	saveList : function () {
+		console.log("Saving the group . . .");
+	},
+
+	hideListOptions : function () {
+
+	},
+
+	createNewTask : function () {
+		
 	}
 
 });
