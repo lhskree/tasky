@@ -13,6 +13,7 @@ html, body {
 
 .list__options {
 	margin: 1em 0;
+	display: none;
 }
 
 .tasks {

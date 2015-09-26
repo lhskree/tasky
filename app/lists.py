@@ -1,14 +1,14 @@
 from app import app, mongo
-from flask import request, json, Response
+from flask import request, json
 from bson.objectid import ObjectId
 
 import base64
 
 # Lists API
-@app.route('/api/lists', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/api/lists', methods=['GET', 'POST', 'DELETE'])
 def lists():
 
-	# GET
+	# GET query on all lists
 	if request.method == 'GET':
 
 		# There are some arguments
@@ -19,7 +19,6 @@ def lists():
 			# All query
 			if request.args['all']:
 				print("Getting all lists")
-				pass
 
 			# Normal search query
 			else:
@@ -27,12 +26,11 @@ def lists():
 					query[arg] = request.args[arg]
 
 			# Perform the search
-			cursor = mongo.db.lists.find(query)
+			cursor = mongo.app.lists.find(query)
 
 			# Parse and return the body
 			body = []
 			for item in cursor:
-				print(item)
 				temp = {}
 				for key in item:
 					if key == '_id':
@@ -53,12 +51,12 @@ def lists():
 				"results" : 0
 				})
 
-	# POST
+	# POST to save a new list
 	elif request.method == 'POST':
 		if request.headers['Content-Type'] == 'application/json':
 			body = request.json
 
-			write_result = mongo.db.lists.insert(body)
+			write_result = mongo.app.lists.insert(body)
 
 		# Great jerb!		
 		if isinstance(write_result, ObjectId):
@@ -74,10 +72,50 @@ def lists():
 				"errmsg" : "Failed to write list"
 				})
 
-	# PUT
-	elif request.method == 'PUT':
-		return "PUT REQUEST"
-
-	# DELETE
+	# DELETE will delete all lists!
 	elif request.method == 'DELETE':
 		return "DELETE REQUEST"
+
+# List requests on a single list
+@app.route('/api/lists/<string:oid>', methods=['GET', 'PUT', 'DELETE'])
+def single_list(oid):
+
+	# GET a list by oid
+	if request.method == 'GET':
+		return "GET"
+
+	# PUT to update a single list
+	elif request.method == 'PUT':
+		if request.headers['Content-Type'] == 'application/json':
+			body = request.json
+			query = {}
+			query['_id'] = base64.b64decode(oid)
+			update = {}
+			update["$set"] = {}
+			for key in body:
+				update["$set"][key] = body[key]
+			print("Query::")
+			print(query)
+			print("Update::")
+			print(update)
+			result = mongo.app.lists.update_one(query, update)
+			return json.jsonify(result)
+		# handle put with bad content-type
+		return False
+
+	# DELETE a single list
+	elif request.method == 'DELETE':
+		# this should also delete all tasks associated with the list
+		return "DELETE " + oid
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,7 @@ App.View.Home = Backbone.View.extend({
 		_.bindAll(this, "render");
 		this.template = Handlebars.compile($("#template-home").html());
 		this.render();
+		this.fetchLists();
 	},
 
 	render : function () {
@@ -21,11 +22,27 @@ App.View.Home = Backbone.View.extend({
 	},
 
 	createNewList : function () {
-		console.log("Making a new list . . .");
+		console.log("Making a new list");
 		var list = new App.Model.List();
 		var listView = new App.View.List({
 			model : list
 		});
+	},
+
+	fetchLists : function () {
+		console.log("Showing all lists");
+		$.get('api/lists?all=true')
+			.success(function (data) {
+				data.results.forEach(function (result) {
+					var list = new App.Model.List(result);
+					var listView = new App.View.List({
+						model : list
+					});
+				});
+			})
+			.fail(function (err) {
+				console.log(err + "::failed to fetch lists");
+			});
 	}
 
 });

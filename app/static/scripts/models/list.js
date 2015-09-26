@@ -5,11 +5,12 @@ App.Model.List = Backbone.Model.extend({
 
 	urlRoot : "/api/lists",
 
+	idAttribute : "oid",
+
 	defaults : {
-		"title" : "Click to Change the Title",
+		"title" : "",
 		"order" : 0,
 		"tasks" : [],
-		"oid" : false
 	}
 
 })

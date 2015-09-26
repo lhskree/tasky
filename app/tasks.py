@@ -13,7 +13,7 @@ def tasks():
 			query = {}
 			for arg in request.args:
 				query[arg] = request.args[arg]
-			cursor = mongo.db.tasks.find(query)
+			cursor = mongo.app.tasks.find(query)
 			for c in cursor:
 				print(c)
 		# Query is empty, you GET nothing!
@@ -27,7 +27,7 @@ def tasks():
 	elif request.method == 'POST':
 		if request.headers['Content-Type'] == 'application/json':
 			body = request.json
-			write_result = mongo.db.tasks.insert(body)
+			write_result = mongo.app.tasks.insert(body)
 
 		# Something bad happened
 		if write_result['writeError']:
