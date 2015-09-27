@@ -1,0 +1,139 @@
+@import 'reset';
+
+$br: 8px;
+$sbr: $br / 2;
+
+$mainBG: #efefef;
+$mainHoverBG: #bbb;
+$mainF: #333;
+$mainFL: #777;
+$accent1: coral;
+$accent2: lightblue;
+
+html, body {
+	height: 100vh;
+	width: 100vw;
+	font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+#out {
+	padding-top: 5vh;
+}
+
+#lists {
+	.list {
+		padding: 1em;
+		background-color: $mainBG;
+		width: 300px;
+		margin-bottom: 2em;
+		margin-left: 10%;
+		border-radius: $br;
+		.list__title {
+			border: none;
+			border-radius: $sbr;
+			padding: .5em;
+			margin: .5em 0;
+			cursor: pointer;
+			&:focus {
+				cursor: inherit;
+			}
+		}
+		.tasks__new {
+			text-decoration: underline;
+			color: $mainFL;
+			display: inline-block;
+			width: 100%;
+			padding: .5em;
+			cursor: pointer;
+			border-radius: $sbr;
+			&:hover {
+				background-color: $mainHoverBG;
+			}
+		}
+		.tasklist {
+			.task {
+				position: relative;
+				.task__title {
+					width: 80%;
+					display: inline-block;
+					padding: .5em;
+					cursor: pointer;
+					border-radius: $sbr;
+					&:hover {
+						background-color: $mainHoverBG;
+						color: white;
+					}
+				}
+				.task__quickOptions {
+					cursor: pointer;
+					padding-left: 1em;
+					&:hover {
+						color: $accent1;
+					}
+				}
+				.quickOptions {
+					visibility: hidden;
+					position: absolute;
+					left: -80px;
+				    top: -30px;
+					&--visible {
+						visibility: inherit;
+					}
+					.quickOptions__option {
+						margin: .5em;
+						padding: $sbr;
+						border-radius: $sbr;
+						color: white;
+						background-color: $mainFL;
+						cursor: pointer;
+						&:hover {
+							background-color: $accent2;
+						}
+						&--delete {
+
+						}
+						&--move {
+
+						}
+						&--copy {
+
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.list__options {
+	margin: 1em 0;
+	display: none;
+}
+
+.tasks {
+	margin: .5em 0;
+}
+
+.tasks__task {
+	position: relative;
+}
+
+.tasks__task {
+	font-size: 20px;
+	padding: 1em;
+	background-color: #bbb;
+	border-radius: 5px;
+}
+
+.tasks__task__delete {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	cursor: pointer;
+}
+
+.modal-close {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}

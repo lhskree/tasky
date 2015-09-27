@@ -26,21 +26,26 @@
 		<button class="btn col-lg-2 list__options__close"><span class="glyphicon glyphicon-remove"></span>
 	</div>
 
-	<div class="row tasks">
-		<button class="btn btn-primary tasks__new">New Task</button>
-		<div class="tasks__tasklist">
-			{{#each tasks}}
-				<div class="tasks__task">
-					<h3 class="tasks__task__title" data-toggle="modal">
-						{{#if this.title}}
-							{{this.title}}
-						{{else}}
-							Click to Add a Description
-						{{/if}}
-					</h3>
-				</div>
-			{{/each}}
-		</div>
+
+	<a class="tasks__new">Add a new task . . .</a>
+	<div class="row tasklist">
+		{{#each tasks}}
+			<div class="task">
+				<span class="task__quickOptions glyphicon glyphicon-cog"></span>
+				<h4 class="task__title" data-toggle="modal">
+					{{#if this.title}}
+						{{this.title}}
+					{{else}}
+						Click to Add a Description
+					{{/if}}
+				</h4>
+				<ul class="quickOptions">
+					<li class="quickOptions__option quickOptions__option--delete">Delete</li>
+					<li class="quickOptions__option quickOptions__option--move">Move</li>
+					<li class="quickOptions__option quickOptions__option--copy">Copy</li>
+				</ul>
+			</div>
+		{{/each}}
 	</div>
 </div>
 
@@ -52,13 +57,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Hi there!</h4>
+				<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
 			</div>
 	      	<div class="modal-body">
     			<p>Some text in the modal.</p>
   			</div>
-		    <div class="modal-footer">
-		    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		    </div>
 		</div>
 	</div>
 

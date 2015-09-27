@@ -3,8 +3,6 @@ App.View = App.View || {};
 
 App.View.List = Backbone.View.extend({
 
-	className : "list",
-
 	initialize : function () {
 		_.bindAll(this, "render");
 		this.template = Handlebars.compile($("#template-list").html())
@@ -25,7 +23,7 @@ App.View.List = Backbone.View.extend({
 		"click .list__options__delete" : "deleteList",
 		"click .tasks__new" : "createNewTask",
 		"click .tasks__task__title" : "editNewTask",
-		"focusout .list__title" : "hideListOptions"
+		"click .task__quickOptions" : "showQuickOptions"
 	},
 
 	saveList : function () {
@@ -50,6 +48,7 @@ App.View.List = Backbone.View.extend({
 		} else {
 			// Let the user know to enter a title or hide the options
 		}
+		this.hideListOptions();
 	},
 
 	showListOptions : function () {
@@ -90,6 +89,16 @@ App.View.List = Backbone.View.extend({
 			//since it needs more information about where it exists in the dom
 			taskView.render();
 		}
+	},
+
+	showQuickOptions : function (e) {
+		var $target = $(e.currentTarget);
+		$target.siblings(".quickOptions").toggleClass("quickOptions--visible");
+	},
+
+	hideQuickOptions : function (e) {
+		var $target = $(e.currentTarget);
+		$target.siblings(".quickOptions").removeClass("quickOptions--visible");
 	}
 
 });
