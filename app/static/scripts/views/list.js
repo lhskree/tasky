@@ -24,6 +24,7 @@ App.View.List = Backbone.View.extend({
 		"click .list__options__save" : "saveList",
 		"click .list__options__delete" : "deleteList",
 		"click .tasks__new" : "createNewTask",
+		"click .tasks__task__title" : "editNewTask",
 		"focusout .list__title" : "hideListOptions"
 	},
 
@@ -66,6 +67,29 @@ App.View.List = Backbone.View.extend({
 
 	createNewTask : function () {
 		console.log("Creating a new task");
+		var taskList = this.model.get("tasks");
+		taskList.push({
+			"title" : ""
+		});
+		this.render();
+		this.delegateEvents(this.events);
+	},
+
+	editNewTask : function (e) {
+		console.log("Editing the task");
+		var $target = $(e.currentTarget);
+		if (!($target).attr("data-target")) {
+			var task = new App.Model.Task();
+			var taskView = new App.View.Task({
+				model : task
+			});
+			$target.attr("data-target", "#" + taskView.id);
+			$(taskView.id).modal();
+			taskView.$parent = $target.parent();
+			// This view doesn't render via init
+			//since it needs more information about where it exists in the dom
+			taskView.render();
+		}
 	}
 
 });
