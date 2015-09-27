@@ -34,7 +34,6 @@ def lists():
 				temp = {}
 				for key in item:
 					if key == '_id':
-						print(item[key])
 						temp['oid'] = base64.b64encode(str(item['_id']))
 					else:
 						temp[key] = item[key]
@@ -75,7 +74,11 @@ def lists():
 
 	# DELETE will delete all lists!
 	elif request.method == 'DELETE':
-		return "DELETE REQUEST"
+		drop_result = mongo.app.lists.drop()
+
+		return json.jsonify({
+			"drop_result" : drop_result
+			})
 
 # List requests on a single list
 @app.route('/api/lists/<string:oid>', methods=['GET', 'PUT', 'DELETE'])
@@ -108,7 +111,13 @@ def single_list(oid):
 	# DELETE a single list
 	elif request.method == 'DELETE':
 		# this should also delete all tasks associated with the list
-		return "DELETE " + oid
+		
+		# query by decoded oid
+		query = {}
+		query['_id'] = ObjectId(base64.b64decode(oid))
+
+		delete_result = mongo.app.lists.remove(query)
+		return json.jsonify(delete_result)
 
 
 

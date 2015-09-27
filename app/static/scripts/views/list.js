@@ -22,7 +22,9 @@ App.View.List = Backbone.View.extend({
 		"click .list__title" : "showListOptions",
 		"click .list__options__close" : "hideListOptions",
 		"click .list__options__save" : "saveList",
-		"click .tasks__new" : "createNewTask"
+		"click .list__options__delete" : "deleteList",
+		"click .tasks__new" : "createNewTask",
+		"focusout .list__title" : "hideListOptions"
 	},
 
 	saveList : function () {
@@ -35,14 +37,11 @@ App.View.List = Backbone.View.extend({
 					this.model.toJSON(),
 					{
 						success : function (model, response, options) {
-							console.log("Success")
+							console.log("Success updating list")
 						},
 
 						error : function (model, response, options) {
-							console.log("Error")
-							console.log(model);
-							console.log(response);
-							console.log(options);
+							console.log("Error updating list");
 						},
 					}
 				);
@@ -58,6 +57,11 @@ App.View.List = Backbone.View.extend({
 
 	hideListOptions : function () {
 		this.$el.find(".list__options").hide();
+	},
+
+	deleteList : function () {
+		this.model.destroy();
+		this.$el.remove();
 	},
 
 	createNewTask : function () {
