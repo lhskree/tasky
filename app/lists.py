@@ -34,7 +34,8 @@ def lists():
 				temp = {}
 				for key in item:
 					if key == '_id':
-						temp['oid'] = base64.b64encode(str(item['_id']))
+						id = str(item['_id']).encode('ascii')
+						temp['oid'] = base64.b64encode(id).decode('ascii')
 					else:
 						temp[key] = item[key]
 				body.append(temp)
@@ -95,7 +96,7 @@ def single_list(oid):
 
 			# query by decoded oid
 			query = {}
-			query['_id'] = ObjectId(base64.b64decode(oid))
+			query['_id'] = ObjectId(base64.b64decode(oid).decode('ascii'))
 
 			#update each of the keys
 			# TODO update via patch for diff of keys

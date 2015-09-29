@@ -2,8 +2,8 @@ from app import app, mongo
 from flask import request
 
 # Different endpoints
-import tasks
-import lists
+from . import tasks
+from . import lists
 
 # Default routes
 @app.route('/')
