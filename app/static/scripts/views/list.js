@@ -6,12 +6,12 @@ App.View.List = Backbone.View.extend({
 	initialize : function () {
 		_.bindAll(this, "render");
 		this.template = Handlebars.compile($("#template-list").html())
-		this.render();
+		this.$el.html(this.template(this.model.toJSON()));
+		$("#lists").prepend(this.$el)
 	},
 
 	render : function () {
 		this.$el.html(this.template(this.model.toJSON()));
-		$("#lists").prepend(this.$el);
 		this.delegateEvents(this.events);
 		return this;
 	},
@@ -22,8 +22,7 @@ App.View.List = Backbone.View.extend({
 		"click .list__options__save" : "saveList",
 		"click .list__options__delete" : "deleteList",
 		"click .tasks__new" : "createNewTask",
-		"click .tasks__task__title" : "editNewTask",
-		"click .task__quickOptions" : "showQuickOptions"
+		"click .task__quickOptions" : "showQuickOptions",
 	},
 
 	saveList : function () {
@@ -64,31 +63,24 @@ App.View.List = Backbone.View.extend({
 		this.$el.remove();
 	},
 
-	createNewTask : function () {
+	createNewTask : function (e) {
 		console.log("Creating a new task");
+		var task = new App.Model.Task();
 		var taskList = this.model.get("tasks");
+		console.log(taskList);
 		taskList.push({
-			"title" : ""
+			"title" : "",
+			"modal-target" : "#" + task.cid
 		});
+		this.model.set(taskList);
+		console.log(taskList);
+		// Re-render the list
 		this.render();
-		this.delegateEvents(this.events);
-	},
-
-	editNewTask : function (e) {
-		console.log("Editing the task");
-		var $target = $(e.currentTarget);
-		if (!($target).attr("data-target")) {
-			var task = new App.Model.Task();
-			var taskView = new App.View.Task({
-				model : task
-			});
-			$target.attr("data-target", "#" + taskView.id);
-			$(taskView.id).modal();
-			taskView.$parent = $target.parent();
-			// This view doesn't render via init
-			//since it needs more information about where it exists in the dom
-			taskView.render();
-		}
+		// Create the modal view
+		var taskView = new App.View.Task({
+			model : task,
+			id : task.cid
+		});
 	},
 
 	showQuickOptions : function (e) {
@@ -99,6 +91,6 @@ App.View.List = Backbone.View.extend({
 	hideQuickOptions : function (e) {
 		var $target = $(e.currentTarget);
 		$target.siblings(".quickOptions").removeClass("quickOptions--visible");
-	}
+	},
 
 });

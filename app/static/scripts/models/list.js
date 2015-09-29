@@ -13,4 +13,4 @@ App.Model.List = Backbone.Model.extend({
 		"tasks" : [],
 	}
 
-})
+});
