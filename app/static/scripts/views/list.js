@@ -13,7 +13,7 @@ App.View.List = Backbone.View.extend({
 			"data-order" : this.model.get("order"),
 			"data-oid" : this.model.get("oid")
 		});
-		$("#lists").prepend(this.$el)
+		$("#lists").prepend(this.$el);
 	},
 
 	render : function () {
@@ -83,8 +83,9 @@ App.View.List = Backbone.View.extend({
 		// Create the modal view
 		var taskView = new App.View.Task({
 			model : task,
-			id : task.cid
 		});
+		// Assign the client-id to the view until the model is saved
+		taskView.$el.attr("id", task.cid);
 	},
 
 	showQuickOptions : function (e) {

@@ -2,50 +2,49 @@
 
 <script id="template-list" type="text/x-handlebars-template">
 
-<input type="text" class="list__title col-lg-12" placeholder="Click to Change the Title" value="{{title}}">
-<div class="row list__options">
-	<button class="btn btn-danger col-lg-2 list__options__delete"><span class="glyphicon glyphicon-trash"></span>
-	<button class="btn btn-success col-lg-8 list__options__save">Save</button>
-	<button class="btn col-lg-2 list__options__close"><span class="glyphicon glyphicon-remove"></span>
-</div>
+	<input type="text" class="list__title col-lg-12" placeholder="Click to Change the Title" value="{{title}}">
+	<div class="row list__options">
+		<button class="btn btn-danger col-lg-2 list__options__delete"><span class="glyphicon glyphicon-trash"></span>
+		<button class="btn btn-success col-lg-8 list__options__save">Save</button>
+		<button class="btn col-lg-2 list__options__close"><span class="glyphicon glyphicon-remove"></span>
+	</div>
 
 
-<a class="tasks__new">Add a new task . . .</a>
-<div class="tasklist">
-	{{#each tasks}}
-		<div class="task">
-			{{!--<span class="task__quickOptions glyphicon glyphicon-cog"></span>--}}
-			<h4 class="task__title" data-toggle="modal" data-target="{{this.modal-target}}">
-				{{#if this.title}}
-					{{this.title}}
-				{{else}}
-					Click to Add a Description
-				{{/if}}
-			</h4>
-			{{!--<ul class="quickOptions">
-				<li class="quickOptions__option quickOptions__option--delete">Delete</li>
-				<li class="quickOptions__option quickOptions__option--move">Move</li>
-				<li class="quickOptions__option quickOptions__option--copy">Copy</li>
-			</ul>--}}
-		</div>
-	{{/each}}
-</div>
+	<a class="tasks__new">Add a new task . . .</a>
+	<div class="tasklist">
+		{{#each tasks}}
+			<div class="task">
+				{{!--<span class="task__quickOptions glyphicon glyphicon-cog"></span>--}}
+				<h4 class="task__title" data-toggle="modal" data-target="{{this.modal-target}}">
+					{{#if this.title}}
+						{{this.title}}
+					{{else}}
+						Click to Add a Description
+					{{/if}}
+				</h4>
+				{{!--<ul class="quickOptions">
+					<li class="quickOptions__option quickOptions__option--delete">Delete</li>
+					<li class="quickOptions__option quickOptions__option--move">Move</li>
+					<li class="quickOptions__option quickOptions__option--copy">Copy</li>
+				</ul>--}}
+			</div>
+		{{/each}}
+	</div>
 
 </script>
 
 <script id="template-task" type="text/x-handlebars-template">
 
-<div class="task modal fade" id="{{id}}">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">{{title}}</h4>
-				<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-body">
+			<div class="modal-task">
+			<div class="modal-task__title">
+				<h4>{{title}}</h4> in list <span class="modal-task__parentList">{{parentList}}</span>
 			</div>
-	      	<div class="modal-body">
-    			<p>Some text in the modal.</p>
-  			</div>
+			<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
 		</div>
 	</div>
+</div>
 
 </script>
