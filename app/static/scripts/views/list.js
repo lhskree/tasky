@@ -3,10 +3,16 @@ App.View = App.View || {};
 
 App.View.List = Backbone.View.extend({
 
+	className : "list",
+
 	initialize : function () {
 		_.bindAll(this, "render");
 		this.template = Handlebars.compile($("#template-list").html())
 		this.$el.html(this.template(this.model.toJSON()));
+		this.$el.attr({
+			"data-order" : this.model.get("order"),
+			"data-oid" : this.model.get("oid")
+		});
 		$("#lists").prepend(this.$el)
 	},
 
@@ -67,13 +73,11 @@ App.View.List = Backbone.View.extend({
 		console.log("Creating a new task");
 		var task = new App.Model.Task();
 		var taskList = this.model.get("tasks");
-		console.log(taskList);
 		taskList.push({
 			"title" : "",
 			"modal-target" : "#" + task.cid
 		});
 		this.model.set(taskList);
-		console.log(taskList);
 		// Re-render the list
 		this.render();
 		// Create the modal view
