@@ -9,11 +9,12 @@ App.View.Task = Backbone.View.extend({
 		this.template = Handlebars.compile($("#template-task").html());
 		this.$el.html((this.template(this.model.toJSON())));
 		this.$el.modal({show:false});
+		this.model.on('change', this.render, this);
 		$("body").append(this.$el);
 	},
 
 	render : function () {
-		this.setElement(this.template(this.model.toJSON()));
+		this.$el.html(this.template(this.model.toJSON()));
 		this.delegateEvents(this.events);
 		return this;
 	},
@@ -43,7 +44,6 @@ App.View.Task = Backbone.View.extend({
 					{
 						success : function (model, response, options) {
 							console.log("Success updating task");
-							this.render();
 						},
 
 						error : function (model, response, options) {
@@ -67,14 +67,13 @@ App.View.Task = Backbone.View.extend({
 		var $description = this.$el.find(".modal-task__description");
 		// TODO validation
 		if ($description.val()) {
-			this.model.set("title", $title.val());
+			this.model.set("description", $description.val());
 			if (this.model.hasChanged()) {
 				this.model.save(
 					this.model.toJSON(),
 					{
 						success : function (model, response, options) {
 							console.log("Success updating task");
-							this.render();
 						},
 
 						error : function (model, response, options) {
@@ -86,7 +85,6 @@ App.View.Task = Backbone.View.extend({
 		} else {
 			// Let the user know to enter a title or hide the options
 		}
-		this.hideListOptions();
 	}
 
 

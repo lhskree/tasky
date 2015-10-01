@@ -13,6 +13,7 @@ App.View.List = Backbone.View.extend({
 			"data-order" : this.model.get("order"),
 			"data-oid" : this.model.get("oid")
 		});
+		this.model.on('change', this.render);
 		$("#lists").prepend(this.$el);
 	},
 
