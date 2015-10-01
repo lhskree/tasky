@@ -15,13 +15,7 @@
 		{{#each tasks}}
 			<div class="task">
 				{{!--<span class="task__quickOptions glyphicon glyphicon-cog"></span>--}}
-				<h4 class="task__title" data-toggle="modal" data-target="{{this.modal-target}}">
-					{{#if this.title}}
-						{{this.title}}
-					{{else}}
-						Click to Add a Description
-					{{/if}}
-				</h4>
+				<h4 class="task__title" data-toggle="modal" data-target="{{this.modal-target}}">{{this.title}}</h4>
 				{{!--<ul class="quickOptions">
 					<li class="quickOptions__option quickOptions__option--delete">Delete</li>
 					<li class="quickOptions__option quickOptions__option--move">Move</li>
@@ -39,10 +33,24 @@
 	<div class="modal-content">
 		<div class="modal-body">
 			<div class="modal-task">
-			<div class="modal-task__title">
-				<h4>{{title}}</h4> in list <span class="modal-task__parentList">{{parentList}}</span>
-			</div>
-			<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
+				<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
+				<div class="modal-task__title">
+					<h3>{{title}}</h3>
+					{{!-- input is hidden initially --}}
+					<div class="title__edit">
+						<input type="text" placeholder="Edit task title" value="">
+						<button class="btn btn-success col-lg-4 edit__save">Save</button>
+						<button class="btn col-lg-2 edit__close"><span class="glyphicon glyphicon-remove"></span></button>
+					</div>
+					<span>in list </span>
+					<span class="modal-task__parentList">{{parentList}}</span>
+				</div>
+				<h4>Description</h4><span class="edit">Edit</span>
+				<textarea class="modal-task__description" placeholder="Enter a description">{{description}}</textarea>
+					<div class="description__edit">
+						<button class="btn btn-success col-lg-4 edit__save">Save</button>
+						<button class="btn col-lg-2 edit__close"><span class="glyphicon glyphicon-remove"></span></button>
+					</div>
 		</div>
 	</div>
 </div>

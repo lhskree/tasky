@@ -9,10 +9,12 @@ App.Model.Task = Backbone.Model.extend({
 
 	defaults : {
 		"title" : "",
-		"description" : "",
+		"parentList" : "",
+		"parentOID" : "",
+		"description" : " ",
 		"owner" : "",
-		"member" : [],
-		"dateCreate" : new Date(),
+		"members" : [],
+		"dateCreated" : new Date(),
 		"dateDue" : "",
 		"attachments" : [],
 		"order" : 0,

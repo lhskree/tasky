@@ -14,7 +14,7 @@ $slate: #313638;
 $offwhite: #F5F5F5;
 $red: #FF5A5F;
 $teal: #087E8B;
-$tan: #A89C91;
+$tan: #ccc;
 
 $tran: .7s;
 
@@ -49,7 +49,7 @@ body {
 		margin-bottom: 2em;
 		margin: 60px;
 		border-radius: $br;
-		.list__title {
+		&__title {
 			background-color: $tan;
 			color: $mainF;
 			border: none;
@@ -62,7 +62,7 @@ body {
 				background-color: white;
 			}
 		}
-		.list__options {
+		&__options {
 
 		}
 		.tasks__new {
@@ -79,11 +79,11 @@ body {
 		}
 		.tasklist {
 			.task {
-				padding: 1em;
+				padding: .5em;
 				background-color: $offwhite;
 				position: relative;
 				border-radius: $br;
-				.task__title {
+				&__title {
 					width: 100%;
 					display: inline-block;
 					padding: .5em;
@@ -95,7 +95,7 @@ body {
 						color: white;
 					}
 				}
-				.task__quickOptions {
+				&__quickOptions {
 					cursor: pointer;
 					padding-left: 1em;
 					&:hover {
@@ -113,12 +113,12 @@ body {
 						height: auto;
 						transition: $tran;
 					}
-					.quickOptions__option {
+					&__option {
 						margin: .5em;
 						padding: $sbr;
 						border-radius: $sbr;
 						color: white;
-						background-color: $mainFL;
+						background-color: $offwhite;
 						cursor: pointer;
 						&:hover {
 							background-color: $accent2;
@@ -133,6 +133,87 @@ body {
 
 						}
 					}
+				}
+			}
+		}
+	}
+}
+
+.modal-dialog {
+	background-color: $offwhite;
+	border-radius: $br;
+	.modal-content {
+		background-color: $offwhite;
+		border-radius: $br;
+		.modal-body {
+			background-color: $offwhite;
+			border-radius: $br;
+			.modal-task {
+				.modal-close {
+					position: absolute;
+					top: 5px;
+					right: 5px;
+				}
+				&__title {
+					h3 {
+						display: inline-block;
+						font-size: 1.1em;
+						padding: .5em;
+						color: $mainF;
+					}
+					.title__edit {
+						display: none;
+						input {
+							width: 100%;
+							background-color: $offwhite;
+							font-size: 1.1em;
+							padding: .5em;
+							color: $mainF;
+							border: none;
+							outline: none;
+							margin: .5em 0;
+							&:focus {
+								background-color: white;
+							}
+						}
+						.row {
+							margin: 0;
+							.edit__save {
+
+							}
+							.edit__close {
+
+							}
+						}
+					}
+					span {
+						font-size: .9em;
+						color: $mainFL;
+					}
+					.modal-task__parentList {
+						color: $mainF;
+						font-size: 1em;
+						text-decoration: underline;
+					}
+				}
+				h4 {
+					display: inline-block;
+					padding: .5em;
+				}
+				.edit {
+					display: inline;
+					padding: .5em;
+					color: $mainFL;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+				&__description {
+					display: block;
+					margin: .5em 0;
+					resize: vertial;
+					width: 100%;
+					min-height: 200px;
 				}
 			}
 		}
@@ -164,10 +245,4 @@ body {
 	top: 5px;
 	right: 5px;
 	cursor: pointer;
-}
-
-.modal-close {
-	position: absolute;
-	top: 5px;
-	right: 5px;
 }

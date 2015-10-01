@@ -71,10 +71,14 @@ App.View.List = Backbone.View.extend({
 
 	createNewTask : function (e) {
 		console.log("Creating a new task");
-		var task = new App.Model.Task();
+		var task = new App.Model.Task({
+			parentList : this.model.get("title"),
+			parentOID : this.model.id,
+			title : "Edit the title",
+		});
 		var taskList = this.model.get("tasks");
 		taskList.push({
-			"title" : "",
+			"title" : "Edit the title",
 			"modal-target" : "#" + task.cid
 		});
 		this.model.set(taskList);

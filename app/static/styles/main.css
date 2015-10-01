@@ -65,20 +65,20 @@ html, body {
     white-space: initial;
     display: inline-block;
     padding: 1em;
-    background-color: #A89C91;
+    background-color: #ccc;
     width: 300px;
     margin-bottom: 2em;
     margin: 60px;
     border-radius: 8px; }
-    #lists .list .list__title {
-      background-color: #A89C91;
+    #lists .list__title {
+      background-color: #ccc;
       color: #262322;
       border: none;
       border-radius: 4px;
       padding: .5em;
       margin: 0 0 .5em;
       cursor: pointer; }
-      #lists .list .list__title:focus {
+      #lists .list__title:focus {
         cursor: inherit;
         background-color: white; }
     #lists .list .tasks__new {
@@ -92,24 +92,24 @@ html, body {
       #lists .list .tasks__new:hover {
         background-color: #bbb; }
     #lists .list .tasklist .task {
-      padding: 1em;
+      padding: .5em;
       background-color: #F5F5F5;
       position: relative;
       border-radius: 8px; }
-      #lists .list .tasklist .task .task__title {
+      #lists .list .tasklist .task__title {
         width: 100%;
         display: inline-block;
         padding: .5em;
         cursor: pointer;
         border-radius: 4px;
         color: #087E8B; }
-        #lists .list .tasklist .task .task__title:hover {
+        #lists .list .tasklist .task__title:hover {
           background-color: #bbb;
           color: white; }
-      #lists .list .tasklist .task .task__quickOptions {
+      #lists .list .tasklist .task__quickOptions {
         cursor: pointer;
         padding-left: 1em; }
-        #lists .list .tasklist .task .task__quickOptions:hover {
+        #lists .list .tasklist .task__quickOptions:hover {
           color: coral; }
       #lists .list .tasklist .task .quickOptions {
         visibility: hidden;
@@ -121,15 +121,71 @@ html, body {
           visibility: inherit;
           height: auto;
           transition: 0.7s; }
-        #lists .list .tasklist .task .quickOptions .quickOptions__option {
+        #lists .list .tasklist .task .quickOptions__option {
           margin: .5em;
           padding: 4px;
           border-radius: 4px;
           color: white;
-          background-color: #777;
+          background-color: #F5F5F5;
           cursor: pointer; }
-          #lists .list .tasklist .task .quickOptions .quickOptions__option:hover {
+          #lists .list .tasklist .task .quickOptions__option:hover {
             background-color: lightblue; }
+
+.modal-dialog {
+  background-color: #F5F5F5;
+  border-radius: 8px; }
+  .modal-dialog .modal-content {
+    background-color: #F5F5F5;
+    border-radius: 8px; }
+    .modal-dialog .modal-content .modal-body {
+      background-color: #F5F5F5;
+      border-radius: 8px; }
+      .modal-dialog .modal-content .modal-body .modal-task .modal-close {
+        position: absolute;
+        top: 5px;
+        right: 5px; }
+      .modal-dialog .modal-content .modal-body .modal-task__title h3 {
+        display: inline-block;
+        font-size: 1.1em;
+        padding: .5em;
+        color: #262322; }
+      .modal-dialog .modal-content .modal-body .modal-task__title .title__edit {
+        display: none; }
+        .modal-dialog .modal-content .modal-body .modal-task__title .title__edit input {
+          width: 100%;
+          background-color: #F5F5F5;
+          font-size: 1.1em;
+          padding: .5em;
+          color: #262322;
+          border: none;
+          outline: none;
+          margin: .5em 0; }
+          .modal-dialog .modal-content .modal-body .modal-task__title .title__edit input:focus {
+            background-color: white; }
+        .modal-dialog .modal-content .modal-body .modal-task__title .title__edit .row {
+          margin: 0; }
+      .modal-dialog .modal-content .modal-body .modal-task__title span {
+        font-size: .9em;
+        color: #777; }
+      .modal-dialog .modal-content .modal-body .modal-task__title .modal-task__parentList {
+        color: #262322;
+        font-size: 1em;
+        text-decoration: underline; }
+      .modal-dialog .modal-content .modal-body .modal-task h4 {
+        display: inline-block;
+        padding: .5em; }
+      .modal-dialog .modal-content .modal-body .modal-task .edit {
+        display: inline;
+        padding: .5em;
+        color: #777; }
+        .modal-dialog .modal-content .modal-body .modal-task .edit:hover {
+          text-decoration: underline; }
+      .modal-dialog .modal-content .modal-body .modal-task__description {
+        display: block;
+        margin: .5em 0;
+        resize: vertial;
+        width: 100%;
+        min-height: 200px; }
 
 .list__options {
   margin: 1em 0;
@@ -152,10 +208,5 @@ html, body {
   top: 5px;
   right: 5px;
   cursor: pointer; }
-
-.modal-close {
-  position: absolute;
-  top: 5px;
-  right: 5px; }
 
 /*# sourceMappingURL=main.css.map */
