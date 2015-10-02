@@ -7,9 +7,12 @@ App.View.Task = Backbone.View.extend({
 
 	initialize : function () {
 		this.template = Handlebars.compile($("#template-task").html());
+		this.$el.attr("id", this.model.cid);
 		this.$el.html((this.template(this.model.toJSON())));
 		this.$el.modal({show:false});
 		this.model.on('change', this.render, this);
+		this.model.on('change', this.updateParent, this);
+		console.log(this.model.parent);
 		$("body").append(this.$el);
 	},
 
@@ -85,6 +88,21 @@ App.View.Task = Backbone.View.extend({
 		} else {
 			// Let the user know to enter a title or hide the options
 		}
+	},
+
+	updateParent : function () {
+		console.log("update");
+		console.log(this.model.toJSON());
+		var taskList = this.model.parent.get("taskList");		
+		taskList = _.remove(taskList, {
+			"title" : this.model.previous("title"),
+			"oid" : this.model.previous("oid")
+		});
+		taskList.push({
+			"title" : this.model.get("title"),
+			"oid" : this.model.get("oid")
+		})
+		this.model.parent.set("taskList", taskList);
 	}
 
 

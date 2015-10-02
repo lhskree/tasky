@@ -6,14 +6,15 @@ App.View.List = Backbone.View.extend({
 	className : "list",
 
 	initialize : function () {
-		_.bindAll(this, "render");
+		this.models = [];
 		this.template = Handlebars.compile($("#template-list").html())
 		this.$el.html(this.template(this.model.toJSON()));
 		this.$el.attr({
 			"data-order" : this.model.get("order"),
 			"data-oid" : this.model.get("oid")
 		});
-		this.model.on('change', this.render);
+		this.model.on('change', this.render, this);
+		this.model.on('change', this.saveList, this);
 		$("#lists").prepend(this.$el);
 	},
 
@@ -26,13 +27,13 @@ App.View.List = Backbone.View.extend({
 	events : {
 		"click .list__title" : "showListOptions",
 		"click .list__options__close" : "hideListOptions",
-		"click .list__options__save" : "saveList",
+		"click .list__options__save" : "saveListTitle",
 		"click .list__options__delete" : "deleteList",
 		"click .tasks__new" : "createNewTask",
 		"click .task__quickOptions" : "showQuickOptions",
 	},
 
-	saveList : function () {
+	saveListTitle : function () {
 		console.log("Saving the group");
 		var $title = this.$el.find(".list__title");
 		if ($title.val()) {
@@ -57,6 +58,21 @@ App.View.List = Backbone.View.extend({
 		this.hideListOptions();
 	},
 
+	saveList : function () {
+		this.model.save(
+			this.model.toJSON(),
+			{
+				success : function (model, response, options) {
+					console.log("Success updating list")
+				},
+
+				error : function (model, response, options) {
+					console.log("Error updating list");
+				},
+			}
+		);
+	},
+
 	showListOptions : function () {
 		this.$el.find(".list__options").show();
 	},
@@ -67,7 +83,7 @@ App.View.List = Backbone.View.extend({
 
 	deleteList : function () {
 		this.model.destroy();
-		this.$el.remove();
+		this.remove();
 	},
 
 	createNewTask : function (e) {
@@ -77,20 +93,20 @@ App.View.List = Backbone.View.extend({
 			parentOID : this.model.id,
 			title : "Edit the title",
 		});
+		this.models.push(task);
+		// Bind parent model to child model
+		task.parent = this.model;
+		// Add model title and temporary oid to tasklist
 		var taskList = this.model.get("tasks");
 		taskList.push({
 			"title" : "Edit the title",
-			"modal-target" : "#" + task.cid
+			"oid" : task.cid
 		});
 		this.model.set(taskList);
-		// Re-render the list
-		this.render();
 		// Create the modal view
 		var taskView = new App.View.Task({
 			model : task,
 		});
-		// Assign the client-id to the view until the model is saved
-		taskView.$el.attr("id", task.cid);
 	},
 
 	showQuickOptions : function (e) {
@@ -101,6 +117,6 @@ App.View.List = Backbone.View.extend({
 	hideQuickOptions : function (e) {
 		var $target = $(e.currentTarget);
 		$target.siblings(".quickOptions").removeClass("quickOptions--visible");
-	},
+	}
 
 });
