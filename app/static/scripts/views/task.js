@@ -6,13 +6,18 @@ App.View.Task = Backbone.View.extend({
 	className : "fade modal",
 
 	initialize : function () {
+
+		// Compile template and bind to the DOM but don't show it immediately
 		this.template = Handlebars.compile($("#template-task").html());
-		this.$el.attr("id", this.model.cid);
+		this.$el.attr("id", this.model.get("oid") || this.model.cid);
 		this.$el.html((this.template(this.model.toJSON())));
 		this.$el.modal({show:false});
-		this.model.on('change', this.render, this);
-		this.model.on('change:title change:oid', this.updateParent, this);
 		$("body").append(this.$el);
+
+		// Render, sync, and update parent on certain changes
+		this.model.on('change', this.render, this);
+		this.model.on('change', this.syncModel, this);
+		this.model.on('change:title change:oid', this.updateParent, this);
 	},
 
 	render : function () {
@@ -25,7 +30,7 @@ App.View.Task = Backbone.View.extend({
 		"click .modal-task__title h3" : "editTaskTitle",
 		"click .title__edit .edit__save" : "validateTitle",
 		"click .title__edit .edit__close" : "closeTaskTitle",
-		"click .description__edit .edit__save" : "saveTaskDescription",
+		"click .description__edit .edit__save" : "validateDescription",
 	},
 
 	syncModel : function () {
@@ -33,8 +38,7 @@ App.View.Task = Backbone.View.extend({
 			this.model.toJSON(),
 			{
 				success : function (model, response, options) {
-					console.log("Success updating task");
-					console.log(model.toJSON());
+					// console.log("Task model synced");
 				},
 
 				error : function (model, response, options) {
@@ -51,12 +55,10 @@ App.View.Task = Backbone.View.extend({
 	},
 
 	validateTitle : function () {
-		console.log("Saving the title");
 		var $title = this.$el.find(".modal-task__title input");
 		// TODO Validation
 		if ($title.val()) {
 			this.model.set("title", $title.val());
-			this.syncModel();
 		} else {
 			// Let the user know to enter a title or hide the options
 		}
@@ -73,7 +75,6 @@ App.View.Task = Backbone.View.extend({
 		// TODO validation
 		if ($description.val()) {
 			this.model.set("description", $description.val());
-			this.syncModel();
 		} else {
 			// Let the user know to enter a title or hide the options
 		}

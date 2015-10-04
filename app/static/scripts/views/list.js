@@ -88,11 +88,9 @@ App.View.List = Backbone.View.extend({
 			title : "Edit the title"
 			// This tells loadTasks to ignore this unsaved task if the page is closed and reopened
 		});
-		console.log(task.toJSON())
 
 		// Add this new task to this model's list of tasks
 		var tasks = this.model.get("tasks");
-		console.log(tasks);
 		tasks.push({
 			"title" : "Edit the title",
 			"oid" : task.cid,
@@ -100,7 +98,6 @@ App.View.List = Backbone.View.extend({
 		});
 		this.model.set("tasks", tasks);
 		this.model.trigger('change', this.model);
-		console.log(this.model.get("tasks"));
 
 		// Syncing at this point will save a new task with the unsaved flag,
 		// which will be ignored by loadTasks
@@ -116,8 +113,6 @@ App.View.List = Backbone.View.extend({
 	},
 
 	loadTasks : function () {
-		console.log("Fetching tasks");
-		console.log(this.model.toJSON())
 		var taskList = this.model.get("tasks");
 		var which = this;
 		taskList.forEach(function (t) {
@@ -125,14 +120,20 @@ App.View.List = Backbone.View.extend({
 			// a proper oid in mongo
 			if (!t.unsaved) {
 				var task = new App.Model.Task({
-					oid : t.oid
+					"oid" : t.oid
 				});
-				console.log(task.toJSON())
-				task.fetch();
-				task.parent = which.model;
-				// Create the modal view
-				var taskView = new App.View.Task({
-					model : task,
+				task.fetch({
+					success : function () {
+						task.parent = which.model;
+						// Create the modal view
+						var taskView = new App.View.Task({
+							model : task,
+						});
+					},
+
+					error : function(err) {
+						console.log(err);
+					}
 				});
 			} else {
 				// Generate another blank, generic task view
