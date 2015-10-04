@@ -139,53 +139,67 @@ html, body {
     border-radius: 8px; }
     .modal-dialog .modal-content .modal-body {
       background-color: #F5F5F5;
-      border-radius: 8px; }
+      border-radius: 8px;
+      padding: 1em; }
       .modal-dialog .modal-content .modal-body .modal-task .modal-close {
         position: absolute;
         top: 5px;
         right: 5px; }
-      .modal-dialog .modal-content .modal-body .modal-task__title h3 {
-        display: inline-block;
-        font-size: 1.1em;
-        padding: .5em;
-        color: #262322; }
-      .modal-dialog .modal-content .modal-body .modal-task__title .title__edit {
-        display: none; }
-        .modal-dialog .modal-content .modal-body .modal-task__title .title__edit input {
+      .modal-dialog .modal-content .modal-body .modal-task .modal-title {
+        margin: 1em 0; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-title h3 {
+          display: inline-block;
+          font-size: 1.1em;
+          color: #262322;
+          cursor: pointer; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-title span {
+          font-size: .9em;
+          color: #777; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-title .parentList {
+          color: #262322;
+          font-size: 1em;
+          text-decoration: underline; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-title .editor input {
           width: 100%;
-          background-color: #F5F5F5;
+          background-color: white;
           font-size: 1.1em;
           padding: .5em;
           color: #262322;
           border: none;
           outline: none;
           margin: .5em 0; }
-          .modal-dialog .modal-content .modal-body .modal-task__title .title__edit input:focus {
+          .modal-dialog .modal-content .modal-body .modal-task .modal-title .editor input:focus {
             background-color: white; }
-        .modal-dialog .modal-content .modal-body .modal-task__title .title__edit .row {
-          margin: 0; }
-      .modal-dialog .modal-content .modal-body .modal-task__title span {
-        font-size: .9em;
-        color: #777; }
-      .modal-dialog .modal-content .modal-body .modal-task__title .modal-task__parentList {
-        color: #262322;
-        font-size: 1em;
-        text-decoration: underline; }
-      .modal-dialog .modal-content .modal-body .modal-task h4 {
-        display: inline-block;
-        padding: .5em; }
-      .modal-dialog .modal-content .modal-body .modal-task .edit {
-        display: inline;
-        padding: .5em;
-        color: #777; }
-        .modal-dialog .modal-content .modal-body .modal-task .edit:hover {
-          text-decoration: underline; }
-      .modal-dialog .modal-content .modal-body .modal-task__description {
-        display: block;
-        margin: .5em 0;
-        resize: vertial;
-        width: 100%;
-        min-height: 200px; }
+      .modal-dialog .modal-content .modal-body .modal-task .modal-description {
+        margin: 1em 0; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-description h4 {
+          display: inline-block; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-description p {
+          cursor: pointer;
+          padding: 1em; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-description .edit {
+          padding: 0 .5em;
+          display: inline;
+          color: #777;
+          cursor: pointer; }
+          .modal-dialog .modal-content .modal-body .modal-task .modal-description .edit:hover {
+            text-decoration: underline; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-description .editor .description {
+          display: block;
+          resize: vertical;
+          min-height: 200px;
+          width: 100%;
+          background-color: white;
+          font-size: 1.1em;
+          padding: 1em;
+          color: #262322;
+          border: none;
+          outline: none;
+          margin: .5em 0; }
+
+.editor {
+  display: none;
+  padding: 1em; }
 
 .list__options {
   margin: 1em 0;

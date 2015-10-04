@@ -34,23 +34,27 @@
 		<div class="modal-body">
 			<div class="modal-task">
 				<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
-				<div class="modal-task__title">
+
+				<div class="modal-title">
 					<h3>{{title}}</h3>
-					{{!-- input is hidden initially --}}
-					<div class="title__edit">
-						<input type="text" placeholder="Edit task title" value="">
-						<button class="btn btn-success col-lg-4 edit__save">Save</button>
-						<button class="btn col-lg-2 edit__close"><span class="glyphicon glyphicon-remove"></span></button>
+					<div class="editor row">
+						<input type="text" placeholder="Edit task title" value="{{title}}">
+						<button class="btn btn-success col-lg-4 save">Save</button>
+						<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
 					</div>
 					<span>in list </span>
-					<span class="modal-task__parentList">{{parentList}}</span>
+					<span class="parentList">{{parentList}}</span>
 				</div>
-				<h4>Description</h4><span class="edit">Edit</span>
-				<textarea class="modal-task__description" placeholder="Enter a description">{{description}}</textarea>
-					<div class="description__edit">
-						<button class="btn btn-success col-lg-4 edit__save">Save</button>
-						<button class="btn col-lg-2 edit__close"><span class="glyphicon glyphicon-remove"></span></button>
+
+				<div class="modal-description">
+					<h4>Description</h4><span class="edit">Edit</span>
+					<p>{{description}}</p>
+					<div class="editor row">
+						<textarea class="description" placeholder="Enter a description">{{description}}</textarea>
+						<button class="btn btn-success col-lg-4 save">Save</button>
+						<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
 					</div>
+				</div>
 		</div>
 	</div>
 </div>

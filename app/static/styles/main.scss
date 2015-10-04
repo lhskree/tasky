@@ -148,24 +148,34 @@ body {
 		.modal-body {
 			background-color: $offwhite;
 			border-radius: $br;
+			padding: 1em;
 			.modal-task {
 				.modal-close {
 					position: absolute;
 					top: 5px;
 					right: 5px;
 				}
-				&__title {
+				.modal-title {
+					margin: 1em 0;
 					h3 {
 						display: inline-block;
 						font-size: 1.1em;
-						padding: .5em;
 						color: $mainF;
+						cursor: pointer;
 					}
-					.title__edit {
-						display: none;
+					span {
+						font-size: .9em;
+						color: $mainFL;
+					}
+					.parentList {
+						color: $mainF;
+						font-size: 1em;
+						text-decoration: underline;
+					}
+					.editor {
 						input {
 							width: 100%;
-							background-color: $offwhite;
+							background-color: white;
 							font-size: 1.1em;
 							padding: .5em;
 							color: $mainF;
@@ -176,48 +186,51 @@ body {
 								background-color: white;
 							}
 						}
-						.row {
-							margin: 0;
-							.edit__save {
-
-							}
-							.edit__close {
-
-							}
+					}
+				}
+				.modal-description {
+					margin: 1em 0;
+					h4 {
+						display: inline-block;
+					}
+					p {
+						cursor: pointer;
+						padding: 1em;
+					}
+					.edit {
+						padding: 0 .5em;
+						display: inline;
+						color: $mainFL;
+						cursor: pointer;
+						&:hover {
+							text-decoration: underline;
 						}
 					}
-					span {
-						font-size: .9em;
-						color: $mainFL;
+					.editor {
+						.description {
+							display: block;
+							resize: vertical;
+							min-height: 200px;
+							width: 100%;
+							background-color: white;
+							font-size: 1.1em;
+							padding: 1em;
+							color: $mainF;
+							border: none;
+							outline: none;
+							margin: .5em 0;
+						}
 					}
-					.modal-task__parentList {
-						color: $mainF;
-						font-size: 1em;
-						text-decoration: underline;
-					}
-				}
-				h4 {
-					display: inline-block;
-					padding: .5em;
-				}
-				.edit {
-					display: inline;
-					padding: .5em;
-					color: $mainFL;
-					&:hover {
-						text-decoration: underline;
-					}
-				}
-				&__description {
-					display: block;
-					margin: .5em 0;
-					resize: vertial;
-					width: 100%;
-					min-height: 200px;
 				}
 			}
 		}
 	}
+}
+
+// Generic save / close editor for input fields
+.editor {
+	display: none;
+	padding: 1em;
 }
 
 .list__options {

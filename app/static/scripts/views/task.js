@@ -27,10 +27,13 @@ App.View.Task = Backbone.View.extend({
 	},
 
 	events : {
-		"click .modal-task__title h3" : "editTaskTitle",
-		"click .title__edit .edit__save" : "validateTitle",
-		"click .title__edit .edit__close" : "closeTaskTitle",
-		"click .description__edit .edit__save" : "validateDescription",
+		"click .modal-title h3" : "editTaskTitle",
+		"click .modal-title .save" : "validateTitle",
+		"click .modal-title .close" : "closeTaskTitle",
+		"click .modal-description p" : "editTaskDescription",
+		"click .modal-description .edit" : "editTaskDescription",
+		"click .modal-description .save" : "validateDescription",
+		"click .modal-description .close" : "closeTaskDescription"
 	},
 
 	syncModel : function () {
@@ -49,13 +52,17 @@ App.View.Task = Backbone.View.extend({
 	},
 
 	editTaskTitle : function () {
-		this.$el.find(".modal-task__title h3").hide();
-		this.$el.find(".title__edit").show();
-		this.$el.find(".title__edit input").focus();
+		this.$el.find(".modal-title h3").hide();
+		this.$el.find(".modal-title .editor").show();
+	},
+
+	editTaskDescription : function () {
+		this.$el.find(".modal-description p").hide();
+		this.$el.find(".modal-description .editor").show();
 	},
 
 	validateTitle : function () {
-		var $title = this.$el.find(".modal-task__title input");
+		var $title = this.$el.find(".modal-title input");
 		// TODO Validation
 		if ($title.val()) {
 			this.model.set("title", $title.val());
@@ -66,12 +73,17 @@ App.View.Task = Backbone.View.extend({
 	},
 
 	closeTaskTitle : function () {
-		this.$el.find(".modal-task__title h3").show();
-		this.$el.find(".title__edit").hide();
+		this.$el.find(".modal-title h3").show();
+		this.$el.find(".modal-title .editor").hide();
+	},
+
+	closeTaskDescription : function () {
+		this.$el.find(".modal-description p").show();
+		this.$el.find(".modal-description .editor").hide();
 	},
 
 	validateDescription : function () {
-		var $description = this.$el.find(".modal-task__description");
+		var $description = this.$el.find(".modal-description .description");
 		// TODO validation
 		if ($description.val()) {
 			this.model.set("description", $description.val());
