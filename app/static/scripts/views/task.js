@@ -11,8 +11,7 @@ App.View.Task = Backbone.View.extend({
 		this.$el.html((this.template(this.model.toJSON())));
 		this.$el.modal({show:false});
 		this.model.on('change', this.render, this);
-		this.model.on('change', this.updateParent, this);
-		console.log(this.model.parent);
+		this.model.on('change:title change:oid', this.updateParent, this);
 		$("body").append(this.$el);
 	},
 
@@ -24,9 +23,25 @@ App.View.Task = Backbone.View.extend({
 
 	events : {
 		"click .modal-task__title h3" : "editTaskTitle",
-		"click .title__edit .edit__save" : "saveTaskTitle",
+		"click .title__edit .edit__save" : "validateTitle",
 		"click .title__edit .edit__close" : "closeTaskTitle",
 		"click .description__edit .edit__save" : "saveTaskDescription",
+	},
+
+	syncModel : function () {
+		this.model.save(
+			this.model.toJSON(),
+			{
+				success : function (model, response, options) {
+					console.log("Success updating task");
+					console.log(model.toJSON());
+				},
+
+				error : function (model, response, options) {
+					console.log("Error updating task");
+				},
+			}
+		);
 	},
 
 	editTaskTitle : function () {
@@ -35,26 +50,13 @@ App.View.Task = Backbone.View.extend({
 		this.$el.find(".title__edit input").focus();
 	},
 
-	saveTaskTitle : function () {
+	validateTitle : function () {
 		console.log("Saving the title");
 		var $title = this.$el.find(".modal-task__title input");
 		// TODO Validation
 		if ($title.val()) {
 			this.model.set("title", $title.val());
-			if (this.model.hasChanged()) {
-				this.model.save(
-					this.model.toJSON(),
-					{
-						success : function (model, response, options) {
-							console.log("Success updating task");
-						},
-
-						error : function (model, response, options) {
-							console.log("Error updating task");
-						},
-					}
-				);
-			}
+			this.syncModel();
 		} else {
 			// Let the user know to enter a title or hide the options
 		}
@@ -66,42 +68,30 @@ App.View.Task = Backbone.View.extend({
 		this.$el.find(".title__edit").hide();
 	},
 
-	saveTaskDescription : function () {
+	validateDescription : function () {
 		var $description = this.$el.find(".modal-task__description");
 		// TODO validation
 		if ($description.val()) {
 			this.model.set("description", $description.val());
-			if (this.model.hasChanged()) {
-				this.model.save(
-					this.model.toJSON(),
-					{
-						success : function (model, response, options) {
-							console.log("Success updating task");
-						},
-
-						error : function (model, response, options) {
-							console.log("Error updating task");
-						},
-					}
-				);
-			}
+			this.syncModel();
 		} else {
 			// Let the user know to enter a title or hide the options
 		}
 	},
 
 	updateParent : function () {
-		console.log("update");
-		var taskList = this.model.parent.get("tasks");		
-		taskList = _.remove(taskList, {
+		var tasks = this.model.parent.get("tasks");
+		var idx = _.findIndex(tasks, {
 			"title" : this.model.previous("title"),
-			"oid" : this.model.previous("oid")
+			"oid" : this.model.previous("oid") || this.model.cid
 		});
-		taskList.push({
+		tasks[idx] = {
 			"title" : this.model.get("title"),
-			"oid" : this.model.get("oid")
-		})
-		this.model.parent.set("tasks", taskList);
+			"oid" : this.model.get("oid") || this.model.cid,
+			"unsaved" : this.model.isNew()
+		};
+		this.model.parent.set("tasks", tasks);
+		this.model.parent.trigger('change', this.model.parent);
 	}
 
 

@@ -89,7 +89,24 @@ def single_task(oid):
 
 	# GET a list by oid
 	if request.method == 'GET':
-		return "GET"
+		# query by decoded oid
+		query = {}
+		query['_id'] = ObjectId(base64.b64decode(oid))
+		# Perform the search
+		cursor = mongo.app.tasks.find(query)
+
+		# Parse and return the body
+		body = []
+		for item in cursor:
+			temp = {}
+			for key in item:
+				if key == '_id':
+					temp['oid'] = base64.b64encode(str(item['_id']))
+				else:
+					temp[key] = item[key]
+			body = temp
+		# return jaw json result
+		return json.jsonify(body)
 
 	# PUT to update a single list
 	elif request.method == 'PUT':

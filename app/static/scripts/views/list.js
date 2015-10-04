@@ -20,6 +20,7 @@ App.View.List = Backbone.View.extend({
 
 		// Bind render on change
 		this.model.on('change', this.render, this);
+		this.model.on('change', this.syncModel, this);
 	},
 
 	render : function () {
@@ -42,7 +43,6 @@ App.View.List = Backbone.View.extend({
 		var $title = this.$el.find(".list__title");
 		if ($title.val()) {
 			this.model.set("title", $title.val())
-			this.syncModel();
 		} else {
 			// Let the user know to enter a title or hide the options
 			console.log("Empty title.");
@@ -55,7 +55,8 @@ App.View.List = Backbone.View.extend({
 			this.model.toJSON(),
 			{
 				success : function (model, response, options) {
-					console.log("Synced list")
+					console.log("Synced list");
+					console.log(model.toJSON());
 				},
 
 				error : function (model, response, options) {
@@ -87,15 +88,19 @@ App.View.List = Backbone.View.extend({
 			title : "Edit the title"
 			// This tells loadTasks to ignore this unsaved task if the page is closed and reopened
 		});
+		console.log(task.toJSON())
 
 		// Add this new task to this model's list of tasks
 		var tasks = this.model.get("tasks");
+		console.log(tasks);
 		tasks.push({
 			"title" : "Edit the title",
 			"oid" : task.cid,
 			unsaved : true
 		});
-		this.model.set(tasks);
+		this.model.set("tasks", tasks);
+		this.model.trigger('change', this.model);
+		console.log(this.model.get("tasks"));
 
 		// Syncing at this point will save a new task with the unsaved flag,
 		// which will be ignored by loadTasks
@@ -112,6 +117,7 @@ App.View.List = Backbone.View.extend({
 
 	loadTasks : function () {
 		console.log("Fetching tasks");
+		console.log(this.model.toJSON())
 		var taskList = this.model.get("tasks");
 		var which = this;
 		taskList.forEach(function (t) {
@@ -121,7 +127,9 @@ App.View.List = Backbone.View.extend({
 				var task = new App.Model.Task({
 					oid : t.oid
 				});
+				console.log(task.toJSON())
 				task.fetch();
+				task.parent = which.model;
 				// Create the modal view
 				var taskView = new App.View.Task({
 					model : task,
