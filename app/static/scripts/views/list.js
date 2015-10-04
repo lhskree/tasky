@@ -6,16 +6,20 @@ App.View.List = Backbone.View.extend({
 	className : "list",
 
 	initialize : function () {
-		this.models = [];
+		// Create and render template, append to the DOM
 		this.template = Handlebars.compile($("#template-list").html())
 		this.$el.html(this.template(this.model.toJSON()));
 		this.$el.attr({
 			"data-order" : this.model.get("order"),
 			"data-oid" : this.model.get("oid")
 		});
-		this.model.on('change', this.render, this);
-		this.model.on('change', this.saveList, this);
 		$("#lists").prepend(this.$el);
+
+		// Load and render subviews, if applicable
+		this.loadTasks();
+
+		// Bind render on change
+		this.model.on('change', this.render, this);
 	},
 
 	render : function () {
@@ -27,47 +31,35 @@ App.View.List = Backbone.View.extend({
 	events : {
 		"click .list__title" : "showListOptions",
 		"click .list__options__close" : "hideListOptions",
-		"click .list__options__save" : "saveListTitle",
+		"click .list__options__save" : "validateTitle",
 		"click .list__options__delete" : "deleteList",
 		"click .tasks__new" : "createNewTask",
 		"click .task__quickOptions" : "showQuickOptions",
 	},
 
-	saveListTitle : function () {
-		console.log("Saving the group");
+	validateTitle : function () {
+		console.log("Validating new title");
 		var $title = this.$el.find(".list__title");
 		if ($title.val()) {
-			this.model.set("title", $title.val());
-			if (this.model.hasChanged()) {
-				this.model.save(
-					this.model.toJSON(),
-					{
-						success : function (model, response, options) {
-							console.log("Success updating list")
-						},
-
-						error : function (model, response, options) {
-							console.log("Error updating list");
-						},
-					}
-				);
-			}
+			this.model.set("title", $title.val())
+			this.syncModel();
 		} else {
 			// Let the user know to enter a title or hide the options
+			console.log("Empty title.");
 		}
 		this.hideListOptions();
 	},
 
-	saveList : function () {
+	syncModel : function () {
 		this.model.save(
 			this.model.toJSON(),
 			{
 				success : function (model, response, options) {
-					console.log("Success updating list")
+					console.log("Synced list")
 				},
 
 				error : function (model, response, options) {
-					console.log("Error updating list");
+					console.log("Error syncing list");
 				},
 			}
 		);
@@ -87,25 +79,65 @@ App.View.List = Backbone.View.extend({
 	},
 
 	createNewTask : function (e) {
-		console.log("Creating a new task");
 		var task = new App.Model.Task({
+			// Parent title used in task template
 			parentList : this.model.get("title"),
-			parentOID : this.model.id,
-			title : "Edit the title",
+			// Use either the id from the server or the client id (the model must then be saved)
+			parentOID : this.model.id || this.model.cid,
+			title : "Edit the title"
+			// This tells loadTasks to ignore this unsaved task if the page is closed and reopened
 		});
-		this.models.push(task);
-		// Bind parent model to child model
-		task.parent = this.model;
-		// Add model title and temporary oid to tasklist
-		var taskList = this.model.get("tasks");
-		taskList.push({
+
+		// Add this new task to this model's list of tasks
+		var tasks = this.model.get("tasks");
+		tasks.push({
 			"title" : "Edit the title",
-			"oid" : task.cid
+			"oid" : task.cid,
+			unsaved : true
 		});
-		this.model.set(taskList);
-		// Create the modal view
+		this.model.set(tasks);
+
+		// Syncing at this point will save a new task with the unsaved flag,
+		// which will be ignored by loadTasks
+		if (this.model.isNew()) this.syncModel();
+
+		// Bind parent model to child model (for updating the parent from the child)
+		task.parent = this.model;
+
+		// Create the task's view
 		var taskView = new App.View.Task({
 			model : task,
+		});
+	},
+
+	loadTasks : function () {
+		console.log("Fetching tasks");
+		var taskList = this.model.get("tasks");
+		var which = this;
+		taskList.forEach(function (t) {
+			// Only load tasks that have been saved, otherwise they won't have
+			// a proper oid in mongo
+			if (!t.unsaved) {
+				var task = new App.Model.Task({
+					oid : t.oid
+				});
+				task.fetch();
+				// Create the modal view
+				var taskView = new App.View.Task({
+					model : task,
+				});
+			} else {
+				// Generate another blank, generic task view
+				var task = new App.Model.Task({
+					parentList : which.model.get("title"),
+					parentOID : which.model.id,
+					title : "Edit the title"
+				});
+				task.parent = which.model;
+				var taskView = new App.View.Task({
+					model : task,
+				});
+			}
 		});
 	},
 

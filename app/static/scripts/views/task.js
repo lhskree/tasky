@@ -92,8 +92,7 @@ App.View.Task = Backbone.View.extend({
 
 	updateParent : function () {
 		console.log("update");
-		console.log(this.model.toJSON());
-		var taskList = this.model.parent.get("taskList");		
+		var taskList = this.model.parent.get("tasks");		
 		taskList = _.remove(taskList, {
 			"title" : this.model.previous("title"),
 			"oid" : this.model.previous("oid")
@@ -102,7 +101,7 @@ App.View.Task = Backbone.View.extend({
 			"title" : this.model.get("title"),
 			"oid" : this.model.get("oid")
 		})
-		this.model.parent.set("taskList", taskList);
+		this.model.parent.set("tasks", taskList);
 	}
 
 
