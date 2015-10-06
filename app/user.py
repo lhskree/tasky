@@ -1,0 +1,66 @@
+from app import app, mongo
+from flask import request, json, make_response
+from bson.objectid import ObjectId
+
+import base64
+import bcrypt
+
+@app.route('/user', methods=['GET', 'DELETE', 'POST']) # GET + DELETE for debugging only!
+def user():
+
+	if request.method == 'POST':
+		if request.headers['Content-Type'] == 'application/json':
+			body = request.json
+			# Validate username - check for uniqueness
+			# Validate password
+			# pass to bytes
+			password = body['password'].encode('utf-8')
+			hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+			user = {
+				"username" : body['username'],
+				"pass" : hashed
+			}
+			write_result = mongo.app.users.insert(user)
+			if isinstance(write_result, ObjectId):
+				# Return the encoded oid to reference for the tasks
+				return json.jsonify({
+					"success" : True,
+					"oid" : base64.b64encode(str(write_result))
+					})
+			else:
+				return json.jsonify({
+					"error" : "Could not write user to DB"
+					})
+		else:
+			response = make_response(json.jsonify({
+				"error" : True
+				}))
+			response.status_code = 415 # unsupported media type
+			response.headers['Content-Type'] = 'application/json'
+			return response
+
+	# GET all users
+	elif request.method == 'GET':
+
+		# GET all users
+		cursor = mongo.app.users.find({})
+
+		# Parse and return the body
+		body = []
+		for item in cursor:
+			temp = {}
+			for key in item:
+				if key == '_id':
+					temp['oid'] = base64.b64encode(str(item['_id']))
+				else:
+					temp[key] = item[key]
+			body = temp
+		# return raw json result
+		return json.jsonify(body)
+
+	# DELETE all users
+	elif request.method == 'DELETE':
+		drop_result = mongo.app.users.drop()
+		return json.jsonify({
+			"dropped" : drop_result
+			})
