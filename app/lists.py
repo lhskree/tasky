@@ -8,6 +8,8 @@ import base64
 @app.route('/api/lists', methods=['GET', 'POST', 'DELETE'])
 def lists():
 
+	print(request.headers)
+
 	# GET query on all lists
 	if request.method == 'GET':
 

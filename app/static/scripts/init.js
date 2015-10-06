@@ -15,7 +15,9 @@ $(function () {
 			});
 		});
 
-		$.get("/api/lists?all=true")
+		$.ajax("/api/lists?all=true", {headers : {
+			"Authorization" : App.helpers.getAuthHeader()
+		}})
 			.success(function (data) {
 				if (data.results.length) {
 					var $lists = $("#lists");

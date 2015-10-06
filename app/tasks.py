@@ -11,6 +11,8 @@ def tasks():
 	# GET
 	if request.method == 'GET':
 
+		print(request.headers)
+
 		# There are some arguments
 		if request.args:
 
