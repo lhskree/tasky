@@ -18,7 +18,7 @@ def user():
 			hashed = bcrypt.hashpw(password, bcrypt.gensalt())
 			user = {
 				"username" : body['username'],
-				"pass" : hashed
+				"password" : hashed.encode('utf-8')
 			}
 			write_result = mongo.app.users.insert(user)
 			if isinstance(write_result, ObjectId):
@@ -48,15 +48,19 @@ def user():
 		# Parse and return the body
 		body = []
 		for item in cursor:
+			print(item)
 			temp = {}
 			for key in item:
 				if key == '_id':
 					temp['oid'] = base64.b64encode(str(item['_id']))
 				else:
 					temp[key] = item[key]
-			body = temp
+			print(temp)
+			body.append(temp)
 		# return raw json result
-		return json.jsonify(body)
+		return json.jsonify({
+			"results" : body
+			})
 
 	# DELETE all users
 	elif request.method == 'DELETE':

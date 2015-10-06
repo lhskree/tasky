@@ -105,7 +105,7 @@ def single_task(oid):
 				else:
 					temp[key] = item[key]
 			body = temp
-		# return jaw json result
+		# return raw json result
 		return json.jsonify(body)
 
 	# PUT to update a single list
