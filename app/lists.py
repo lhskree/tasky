@@ -2,13 +2,14 @@ from app import app, mongo
 from flask import request, json
 from bson.objectid import ObjectId
 
+from auth import *
+
 import base64
 
 # Lists API
 @app.route('/api/lists', methods=['GET', 'POST', 'DELETE'])
+@requires_auth
 def lists():
-
-	print(request.headers)
 
 	# GET query on all lists
 	if request.method == 'GET':
