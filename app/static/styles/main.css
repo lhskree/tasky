@@ -51,6 +51,10 @@ html, body {
   font-family: 'Helvetica', 'Arial', sans-serif;
   background-color: #313638; }
 
+body h1, body h2, body h3, body h4, body h5, body h6 {
+  color: #F5F5F5;
+  text-align: center; }
+
 #newList {
   position: fixed;
   top: 0;
@@ -196,6 +200,18 @@ html, body {
           border: none;
           outline: none;
           margin: .5em 0; }
+
+#newUser,
+#login {
+  width: 600px;
+  display: block;
+  margin: 0 auto; }
+
+#login {
+  display: none; }
+
+#showLogin {
+  cursor: pointer; }
 
 .editor {
   display: none;

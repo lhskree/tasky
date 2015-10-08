@@ -16,11 +16,41 @@ App.View.Home = Backbone.View.extend({
 		return this;
 	},
 
-	event : {
-		"click .showLogin" : "showLogin"
+	events : {
+		"click #showLogin" : "showLogin",
+		"click #login button[type='submit']" : "validateLogin",
+		"click #newUser button[type='submit']" : "validateNewUser"
 	},
 
 	showLogin : function () {
+		$("#login").show();
+	},
+
+	validateNewUser : function (e) {
+		e.preventDefault();
+		if ($("#signupEmail").val() && $("#signupPass1").val()) {
+			if ($("#signupPass1").val() == $("#signupPass2").val()) {
+				console.log("TACOCOCOC");
+				$.ajax("/api/user", {
+					method : "POST",
+					contentType : "application/json",
+					data : JSON.stringify({
+						"signupEmail" : $("#signupEmail").val(),
+						"signupPass1" : $("#signupPass1").val(),
+						"signupPass2" : $("#signupPass2").val()
+					})
+				})
+				.success(function (data) {
+					console.log(data);
+				})
+				.fail(function (jqxhr) {
+					console.log(jqxhr);
+				});
+			}
+		}
+	},
+
+	validateLogin : function () {
 
 	}
 

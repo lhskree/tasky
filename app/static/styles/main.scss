@@ -26,7 +26,10 @@ html, body {
 }
 
 body {
-	
+	h1, h2, h3, h4, h5, h6 {
+		color: $offwhite;
+		text-align: center;
+	}
 }
 
 #newList {
@@ -225,6 +228,22 @@ body {
 			}
 		}
 	}
+}
+
+// Homepage view
+#newUser,
+#login {
+	width: 600px;
+	display: block;
+	margin: 0 auto;
+}
+
+#login {
+	display: none;
+}
+
+#showLogin {
+	cursor: pointer;
 }
 
 // Generic save / close editor for input fields

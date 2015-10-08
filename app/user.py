@@ -5,7 +5,7 @@ from bson.objectid import ObjectId
 import base64
 import bcrypt
 
-@app.route('/user', methods=['GET', 'DELETE', 'POST']) # GET + DELETE for debugging only!
+@app.route('/api/user', methods=['GET', 'DELETE', 'POST']) # GET + DELETE for debugging only!
 def user():
 
 	if request.method == 'POST':
@@ -14,10 +14,12 @@ def user():
 			# Validate username - check for uniqueness
 			# Validate password
 			# pass to bytes
-			password = body['password'].encode('utf-8')
+			if not body['signupPass1'] == body['signupPass2']:
+				return False # another error response
+			password = body['signupPass1'].encode('utf-8')
 			hashed = bcrypt.hashpw(password, bcrypt.gensalt())
 			user = {
-				"username" : body['username'],
+				"email" : body['signupEmail'],
 				"password" : hashed.encode('utf-8')
 			}
 			write_result = mongo.app.users.insert(user)
