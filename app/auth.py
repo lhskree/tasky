@@ -1,5 +1,10 @@
 from functools import wraps
 from flask import request, make_response, json
+from app import app
+
+import base64
+import bcrypt
+import jwt
 
 def validate_token(auth_header):
 	token = auth_header.split(" ")[1]
@@ -18,6 +23,7 @@ def no_auth():
 
 # Wrapper to authenticate API methods
 def requires_auth(f):
+	@wraps(f)
 	def decorator(*args, **kwargs):
 		auth = request.headers['Authorization']
 		if not auth or not validate_token(auth):
@@ -25,9 +31,11 @@ def requires_auth(f):
 		return f(*args, **kwargs)
 	return decorator
 
-def dec(f):
-	@wraps(f)
-	def decorator(*args, **kwargs):
-		print("Hello")
-		return f(*args, **kwargs)
-	return decorator
+# Revalidates token
+@app.route('/api/auth', methods=['POST'])
+def check_auth():
+	auth = request.headers['Authorization']
+	if not auth or not validate_token(auth):
+		return make_response("", 401)
+	else:
+		return make_response("", 200)

@@ -6,7 +6,8 @@ import base64
 import bcrypt
 import jwt
 
-@app.route('/login', methods=['POST'])
+# the API for logging in
+@app.route('/api/login', methods=['POST'])
 def login():
 
 	if request.headers['Content-Type'] == 'application/json':
@@ -26,3 +27,8 @@ def login():
 				else:
 					body[key] = item[key]
 		return json.jsonify(body)
+
+# the actual login page
+@app.route('/login', methods=['GET'])
+def login_page():
+	return app.send_static_file('login.html')

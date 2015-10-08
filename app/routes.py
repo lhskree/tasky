@@ -9,7 +9,12 @@ from . import logout
 from . import token
 from . import user
 
-# Default home route
+# Authorization decorators and functions
+from auth import *
+
+# Application route (root) RUTE?
 @app.route('/')
+@app.route('/index')
+@app.route('/index.html')
 def index():
 	return app.send_static_file('index.html')
