@@ -19,3 +19,8 @@ App.helpers.setAuthToken = function (token) {
 App.helpers.getAuthHeader = function () {
 	return "Bearer " + App.helpers.getAuthToken();
 }
+
+App.helpers.unsetAuthToken = function () {
+	App.storage.removeItem("token");
+	return true;
+}

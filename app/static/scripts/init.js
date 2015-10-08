@@ -5,10 +5,12 @@ $(function () {
 	$.get('/static/templates.html', function (templates) {
 
 		$("body").append(templates);
+		var home = new App.View.Home();
 
-		App.helpers.setAuthToken("taco");
+		/*
+		App.helpers.unsetAuthToken("taco");
 		var token = App.helpers.getAuthToken() || false;
-		if (true) {
+		if (token) {
 			$.ajax("/api/auth", {
 				method : "POST",
 				headers : {
@@ -58,6 +60,7 @@ $(function () {
 				console.log(err);
 			});
 		}
+		*/
 
 
 	});
