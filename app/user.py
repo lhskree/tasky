@@ -5,6 +5,8 @@ from bson.objectid import ObjectId
 import base64
 import bcrypt
 
+from auth import generate_token
+
 @app.route('/api/user', methods=['GET', 'DELETE', 'POST']) # GET + DELETE for debugging only!
 def user():
 
@@ -16,19 +18,21 @@ def user():
 			# pass to bytes
 			if not body['signupPass1'] == body['signupPass2']:
 				return False # another error response
+			email = body['signupEmail']
 			password = body['signupPass1'].encode('utf-8')
 			hashed = bcrypt.hashpw(password, bcrypt.gensalt())
 			user = {
-				"email" : body['signupEmail'],
+				"email" : email,
 				"password" : hashed.encode('utf-8')
 			}
 			write_result = mongo.app.users.insert(user)
 			if isinstance(write_result, ObjectId):
 				# Return the encoded oid to reference for the tasks
-				return json.jsonify({
-					"success" : True,
-					"oid" : base64.b64encode(str(write_result))
-					})
+				token = generate_token(email)
+				return make_response(json.jsonify({
+					"token" : token,
+					"email" : email
+					}), 200)
 			else:
 				return json.jsonify({
 					"error" : "Could not write user to DB"

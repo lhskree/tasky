@@ -39,3 +39,11 @@ def check_auth():
 		return make_response("", 401)
 	else:
 		return make_response("", 200)
+
+# makes a JWT with a sub
+def generate_token(sub):
+	payload = {
+		"iss" : "tasky:5000",
+		"sub" : sub,
+	}
+	return jwt.encode(payload, app.secret, algorithm='HS256')

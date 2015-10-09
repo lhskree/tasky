@@ -7,8 +7,6 @@ $(function () {
 		$("body").append(templates);
 		var home = new App.View.Home();
 
-		/*
-		App.helpers.unsetAuthToken("taco");
 		var token = App.helpers.getAuthToken() || false;
 		if (token) {
 			$.ajax("/api/auth", {
@@ -60,8 +58,6 @@ $(function () {
 				console.log(err);
 			});
 		}
-		*/
-
 
 	});
 
