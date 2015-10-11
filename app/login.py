@@ -4,34 +4,39 @@ from bson.objectid import ObjectId
 
 import base64
 import bcrypt
-import jwt
+
+from auth import generate_token
 
 # the API for logging in
 @app.route('/api/login', methods=['POST'])
 def login():
 
-	if request.headers['Content-Type'] == 'application/json':
-		body = request.json
-		password = body['password'].encode('utf-8')
-		hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-		query = {
-			"username" : body['username']
-			#"password" : hashed.decode('utf-8')
-		}
-		cursor = mongo.app.users.find(query)
+	if request.method == 'POST':
+		if request.headers['Content-Type'] == 'application/json':
+			body = request.json
 
-		for item in cursor:
-			for key in item:
-				if key == '_id':
-					pass
-				else:
-					body[key] = item[key]
-		return json.jsonify(body)
-	# Only accept JSON
-	else:
-		return make_response("", 415) # unsupported media type
+			# Validate email
+			email = body['email']
+			print(email)
+			user = mongo.app.users.find_one({
+				"email" : email
+				})
 
-# the actual login page
-@app.route('/login', methods=['GET'])
-def login_page():
-	return app.send_static_file('login.html')
+			print(user)
+			print(user['password'])
+			password = body['password'].encode('utf-8')
+			hashed = user['password'].encode('utf-8')
+			if user and bcrypt.hashpw(password, hashed) == hashed:
+				oid = base64.b64encode(str(user['_id']))
+				token = generate_token({
+					"email" : email,
+					"oid" : oid
+					})
+				return make_response(json.jsonify({
+					"token" : token,
+					}), 200)
+			else:
+				return make_response("", 401) # Unauthorized
+		# Only accept JSON
+		else:
+			return make_response("", 415) # unsupported media type

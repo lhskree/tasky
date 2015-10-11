@@ -37,6 +37,7 @@ App.View.Home = Backbone.View.extend({
 
 	validateNewUser : function (e) {
 		e.preventDefault();
+		var which = this;
 		if ($("#signupEmail").val() && $("#signupPass1").val()) {
 			if ($("#signupPass1").val() == $("#signupPass2").val()) {
 				$.ajax("/api/user", {
@@ -67,6 +68,8 @@ App.View.Home = Backbone.View.extend({
 					if (response.token) {
 						App.helpers.setAuthToken(response.token);
 						App.helpers.getBoard();
+						// Destroy this view
+						which.remove();
 					}
 				})
 				.fail(function (jqxhr) {
@@ -76,8 +79,38 @@ App.View.Home = Backbone.View.extend({
 		}
 	},
 
-	validateLogin : function () {
-
+	validateLogin : function (e) {
+		e.preventDefault();
+		var which = this;
+		if ($("#loginEmail").val() && $("#loginPass").val()) {
+			data = {
+				email : $("#loginEmail").val(),
+				password : $("#loginPass").val()
+			}
+			console.log(data)
+			$.ajax("/api/login", {
+				method : "POST",
+				contentType : "application/json",
+				data : JSON.stringify(data)
+			})
+			.success(function (response) {
+				if (response.err) {
+					switch (response.typ) {
+						default:
+							break;
+					}
+				}
+				if (response.token) {
+					App.helpers.setAuthToken(response.token);
+					App.helpers.getBoard();
+					// Destroy this view
+					which.remove();
+				}
+			})
+			.fail(function (jqxhr) {
+				console.log(jqxhr);
+			})
+		}
 	}
 
 });

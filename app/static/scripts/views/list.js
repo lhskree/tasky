@@ -35,8 +35,7 @@ App.View.List = Backbone.View.extend({
 		"click .list__options__save" : "validateTitle",
 		"click .list__options__delete" : "deleteList",
 		"click .tasks__new" : "createNewTask",
-		"click .task__quickOptions" : "showQuickOptions",
-		"click #logout" : "logout"
+		"click .task__quickOptions" : "showQuickOptions"
 	},
 
 	validateTitle : function () {
@@ -111,11 +110,6 @@ App.View.List = Backbone.View.extend({
 		var taskView = new App.View.Task({
 			model : task,
 		});
-	},
-
-	logout : function () {
-		App.helpers.unsetAuthToken();
-		window.location = "/";
 	},
 
 	loadTasks : function () {

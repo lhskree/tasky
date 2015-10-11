@@ -44,6 +44,11 @@ App.helpers.getBoard = function () {
 		});
 	});
 
+	$("#logout").click(function () {
+		App.helpers.unsetAuthToken();
+		window.location = "/";
+	})
+
 	$.ajax("/api/lists?all=true", {
 		method : "GET",
 		headers : {

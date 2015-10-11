@@ -17,9 +17,11 @@ def user():
 
 			# Validate email
 			email = body['signupEmail']
+			print(email)
 			email_exists = mongo.app.users.find_one({
 				"email" : email
 				})
+			print(email_exists)
 			if email_exists:
 				return make_response(json.jsonify({
 					"err" : True,
@@ -40,7 +42,7 @@ def user():
 			# Write query
 			user = {
 				"email" : email,
-				"password" : hashed.encode('utf-8')
+				"password" : hashed
 			}
 
 			# Write new accout to DB
