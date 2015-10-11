@@ -16,10 +16,12 @@ App.View.List = Backbone.View.extend({
 		$("#lists").prepend(this.$el);
 
 		// Load and render subviews, if applicable
+		this.children = [];
 		this.loadTasks();
 
 		// Bind render on change
 		this.model.on('change', this.render, this);
+		this.model.on('change', this.updateChildren, this);
 		this.model.on('change', this.syncModel, this);
 	},
 
@@ -30,17 +32,16 @@ App.View.List = Backbone.View.extend({
 	},
 
 	events : {
-		"click .list__title" : "showListOptions",
-		"click .list__options__close" : "hideListOptions",
-		"click .list__options__save" : "validateTitle",
-		"click .list__options__delete" : "deleteList",
+		"click .list__title .title" : "showListOptions",
+		"click .list__title .save" : "validateTitle",
+		"click .list__title .close" : "hideListOptions",
 		"click .tasks__new" : "createNewTask",
 		"click .task__quickOptions" : "showQuickOptions"
 	},
 
 	validateTitle : function () {
 		console.log("Validating new title");
-		var $title = this.$el.find(".list__title");
+		var $title = this.$el.find(".list__title input");
 		if ($title.val()) {
 			this.model.set("title", $title.val())
 		} else {
@@ -67,11 +68,13 @@ App.View.List = Backbone.View.extend({
 	},
 
 	showListOptions : function () {
-		this.$el.find(".list__options").show();
+		this.$el.find(".list__title .title").hide();
+		this.$el.find(".list__title .editor").addClass("editor--show");
 	},
 
 	hideListOptions : function () {
-		this.$el.find(".list__options").hide();
+		this.$el.find(".list__title .title").show();
+		this.$el.find(".list__title .editor").removeClass("editor--show");
 	},
 
 	deleteList : function () {
@@ -88,6 +91,7 @@ App.View.List = Backbone.View.extend({
 			title : "Edit the title"
 			// This tells loadTasks to ignore this unsaved task if the page is closed and reopened
 		});
+		this.children.push(task);
 
 		// Add this new task to this model's list of tasks
 		var tasks = this.model.get("tasks");
@@ -112,6 +116,14 @@ App.View.List = Backbone.View.extend({
 		});
 	},
 
+	// Iterates over children (task models) and updates their title
+	updateChildren : function () {
+		var title = this.model.get("title");
+		_.each(this.children, function (child) {
+			child.set("parentList", title);
+		});
+	},
+
 	loadTasks : function () {
 		var taskList = this.model.get("tasks");
 		var which = this;
@@ -125,6 +137,7 @@ App.View.List = Backbone.View.extend({
 				task.fetch({
 					success : function () {
 						task.parent = which.model;
+						which.children.push(task);
 						// Create the modal view
 						var taskView = new App.View.Task({
 							model : task,

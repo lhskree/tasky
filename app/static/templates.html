@@ -2,28 +2,24 @@
 
 <script id="template-list" type="text/x-handlebars-template">
 
-	<input type="text" class="list__title col-lg-12" placeholder="Click to Change the Title" value="{{title}}">
-	<div class="row list__options">
-		<button class="btn btn-danger col-lg-2 list__options__delete"><span class="glyphicon glyphicon-trash"></span>
-		<button class="btn btn-success col-lg-8 list__options__save">Save</button>
-		<button class="btn col-lg-2 list__options__close"><span class="glyphicon glyphicon-remove"></span>
+<div class="list__title">
+	<h2 class="title">{{title}}</h2>
+	<div class="editor row">
+		<input type="text" class="col-lg-12" placeholder="Click to Change the Title" value="{{title}}">
+		<button class="btn btn-success col-lg-4 save">Save</button>
+		<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
 	</div>
+</div>
 
+<div class="tasklist">
+	{{#each tasks}}
+		<div class="task">
+			<h4 class="task__title" data-toggle="modal" data-target="#{{this.oid}}">{{this.title}}</h4>
+		</div>
+	{{/each}}
+</div>
 
-	<a class="tasks__new">Add a new task . . .</a>
-	<div class="tasklist">
-		{{#each tasks}}
-			<div class="task">
-				{{!--<span class="task__quickOptions glyphicon glyphicon-cog"></span>--}}
-				<h4 class="task__title" data-toggle="modal" data-target="#{{this.oid}}">{{this.title}}</h4>
-				{{!--<ul class="quickOptions">
-					<li class="quickOptions__option quickOptions__option--delete">Delete</li>
-					<li class="quickOptions__option quickOptions__option--move">Move</li>
-					<li class="quickOptions__option quickOptions__option--copy">Copy</li>
-				</ul>--}}
-			</div>
-		{{/each}}
-	</div>
+<a class="tasks__new">Add a new task . . .</a>
 
 </script>
 
@@ -50,10 +46,24 @@
 					<h4>Description</h4><span class="edit">Edit</span>
 					<p>{{description}}</p>
 					<div class="editor row">
-						<textarea class="description" placeholder="Enter a description">{{description}}</textarea>
+						<textarea placeholder="Enter a description">{{description}}</textarea>
 						<button class="btn btn-success col-lg-4 save">Save</button>
 						<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
 					</div>
+				</div>
+
+				<div class="modal-comments">
+					<h3>Comments</h3>
+					<div class="row addComment editor editor--show">
+						<textarea class="col-lg-12"></textarea>
+						<button class="btn btn-success col-lg-2 save">Comment</button>
+					</div>
+					{{#each comments}}
+					<div class="comment row">
+						<h4 class="comment__author">{{this.author}}</h4>
+						<p>{{this.body}}</p>
+					</div>
+					{{/each}}
 				</div>
 		</div>
 	</div>

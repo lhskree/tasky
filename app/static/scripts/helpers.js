@@ -46,7 +46,6 @@ App.helpers.getBoard = function () {
 	var user = new App.Model.User({
 		"user" : App.user
 	})
-	console.log(user)
 	var nav = new App.View.Nav({
 		model : user
 	});

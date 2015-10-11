@@ -13,7 +13,6 @@ $accent2: lightblue;
 $slate: #313638;
 $offwhite: #F5F5F5;
 $red: #FF5A5F;
-$teal: #087E8B;
 $tan: #ccc;
 
 $tran: .7s;
@@ -27,19 +26,26 @@ html, body {
 
 body {
 	h1, h2, h3, h4, h5, h6 {
-		color: $teal;
-		text-align: center;
+		color: $slate;
 	}
 }
 
+.row {
+	margin-right: inherit;
+	margin-left: inherit;
+}
+
+/************************
+Top Navigation
+************************/
 #navigation {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	margin: 0;
-	padding: .5em;
-	border-bottom: 1px solid $teal;
+	padding: 1em;
+	border-bottom: 1px solid $red;
 	h1 {
 		text-align: center;
 		font-size: 1.2em;
@@ -56,6 +62,9 @@ body {
 	}
 }
 
+/************************
+List view
+************************/
 #lists {
 	padding: 5%;
 	overflow: auto;
@@ -68,23 +77,26 @@ body {
 		background-color: $tan;
 		width: 300px;
 		margin-bottom: 2em;
-		margin: 60px;
+		margin: 6px;
 		border-radius: $br;
 		&__title {
-			background-color: $tan;
-			color: $mainF;
-			border: none;
-			border-radius: $sbr;
-			padding: .5em;
-			margin: 0 0 .5em;
-			cursor: pointer;
-			&:focus {
-				cursor: inherit;
-				background-color: white;
+			.title {
+				background-color: $tan;
+				color: $mainF;
+				border: none;
+				border-radius: $sbr;
+				padding: .5em;
+				margin: 0 0 .5em;
+				cursor: pointer;
 			}
-		}
-		&__options {
-
+			.editor {
+				input {
+					padding: .5em;
+					margin: 0 0 .5em;
+					outline: none;
+					border: none;
+				}
+			}
 		}
 		.tasks__new {
 			text-decoration: underline;
@@ -104,55 +116,18 @@ body {
 				background-color: $offwhite;
 				position: relative;
 				border-radius: $br;
+				margin: .5em 0;
 				&__title {
 					width: 100%;
 					display: inline-block;
-					padding: .5em;
+					padding: .25em .5em;
 					cursor: pointer;
 					border-radius: $sbr;
-					color: $teal;
-					&:hover {
-						background-color: $mainHoverBG;
-						color: white;
-					}
 				}
-				&__quickOptions {
-					cursor: pointer;
-					padding-left: 1em;
-					&:hover {
-						color: $accent1;
-					}
-				}
-				.quickOptions {
-					visibility: hidden;
-					position: absolute;
-					left: -80px;
-				    top: -30px;
-				    transition: $tran;
-					&--visible {
-						visibility: inherit;
-						height: auto;
-						transition: $tran;
-					}
-					&__option {
-						margin: .5em;
-						padding: $sbr;
-						border-radius: $sbr;
+				&:hover {
+					background-color: $red;
+					.task__title {
 						color: white;
-						background-color: $offwhite;
-						cursor: pointer;
-						&:hover {
-							background-color: $accent2;
-						}
-						&--delete {
-
-						}
-						&--move {
-
-						}
-						&--copy {
-
-						}
 					}
 				}
 			}
@@ -160,6 +135,9 @@ body {
 	}
 }
 
+/************************
+Task modal popup
+************************/
 .modal-dialog {
 	background-color: $offwhite;
 	border-radius: $br;
@@ -189,24 +167,9 @@ body {
 						color: $mainFL;
 					}
 					.parentList {
-						color: $mainF;
+						color: $mainFL;
 						font-size: 1em;
 						text-decoration: underline;
-					}
-					.editor {
-						input {
-							width: 100%;
-							background-color: white;
-							font-size: 1.1em;
-							padding: .5em;
-							color: $mainF;
-							border: none;
-							outline: none;
-							margin: .5em 0;
-							&:focus {
-								background-color: white;
-							}
-						}
 					}
 				}
 				.modal-description {
@@ -215,6 +178,7 @@ body {
 						display: inline-block;
 					}
 					p {
+						color: $mainFL;
 						cursor: pointer;
 						padding: 1em;
 					}
@@ -243,12 +207,26 @@ body {
 						}
 					}
 				}
+				.modal-comments {
+					h3 {
+
+					}
+					.addComment {
+						textarea {
+							border-radius: $br;
+							outline: none;
+							border: none;
+						}
+					}
+				}
 			}
 		}
 	}
 }
 
-// Homepage view
+/************************
+Homepage View
+************************/
 #newUser,
 #login {
 	width: 600px;
@@ -275,35 +253,28 @@ body {
 	}
 }
 
-// Generic save / close editor for input fields
-.editor {
+/************************
+Generic save / close editor dialog
+************************/
+div.editor {
 	display: none;
 	padding: 1em;
-}
-
-.list__options {
-	margin: 1em 0;
-	display: none;
-}
-
-.tasks {
-	margin: .5em 0;
-}
-
-.tasks__task {
-	position: relative;
-}
-
-.tasks__task {
-	font-size: 20px;
-	padding: 1em;
-	background-color: #bbb;
-	border-radius: 5px;
-}
-
-.tasks__task__delete {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	cursor: pointer;
+	&--show {
+		display: inherit;
+	}
+	input, textarea {
+		width: 100%;
+		background-color: white;
+		color: $mainF;
+		padding: .5em;
+		margin: 5px auto;
+		outline: none;
+		border: none;
+	}
+	.save {
+		margin: 5px auto;
+	}
+	.close {
+		margin: 5px auto;
+	}
 }
