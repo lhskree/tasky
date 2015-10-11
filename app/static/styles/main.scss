@@ -246,10 +246,21 @@ body {
 
 #login {
 	display: none;
+	#invalidLogin {
+		display: none;
+		margin: 1em auto;
+	}
 }
 
-#showLogin {
-	cursor: pointer;
+#newUser {
+	#emailExists,
+	#passwordMismatch {
+		display: none;
+		margin: 1em auto;
+	}
+	#emailExists {
+		cursor: pointer;
+	}
 }
 
 // Generic save / close editor for input fields

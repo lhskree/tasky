@@ -214,8 +214,15 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 
 #login {
   display: none; }
+  #login #invalidLogin {
+    display: none;
+    margin: 1em auto; }
 
-#showLogin {
+#newUser #emailExists,
+#newUser #passwordMismatch {
+  display: none;
+  margin: 1em auto; }
+#newUser #emailExists {
   cursor: pointer; }
 
 .editor {

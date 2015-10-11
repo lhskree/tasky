@@ -20,7 +20,8 @@ App.View.Home = Backbone.View.extend({
 		"click #showLogin" : "showLogin",
 		"click #showNewUser" : "showNewUser",
 		"click #login button[type='submit']" : "validateLogin",
-		"click #newUser button[type='submit']" : "validateNewUser"
+		"click #newUser button[type='submit']" : "validateNewUser",
+		"click #emailExists" : "showLogin"
 	},
 
 	showNewUser : function (e) {
@@ -31,6 +32,8 @@ App.View.Home = Backbone.View.extend({
 
 	showLogin : function (e) {
 		e.preventDefault();
+		$("#emailExists").hide();
+		$("#passwordMismatch").hide();
 		$("#login").show();
 		$("#newUser").hide();
 	},
@@ -44,9 +47,9 @@ App.View.Home = Backbone.View.extend({
 					method : "POST",
 					contentType : "application/json",
 					data : JSON.stringify({
-						"signupEmail" : $("#signupEmail").val(),
-						"signupPass1" : $("#signupPass1").val(),
-						"signupPass2" : $("#signupPass2").val()
+						signupEmail : $("#signupEmail").val(),
+						signupPass1 : $("#signupPass1").val(),
+						signupPass2 : $("#signupPass2").val()
 					})
 				})
 				.success(function (response) {
@@ -83,15 +86,13 @@ App.View.Home = Backbone.View.extend({
 		e.preventDefault();
 		var which = this;
 		if ($("#loginEmail").val() && $("#loginPass").val()) {
-			data = {
-				email : $("#loginEmail").val(),
-				password : $("#loginPass").val()
-			}
-			console.log(data)
 			$.ajax("/api/login", {
 				method : "POST",
 				contentType : "application/json",
-				data : JSON.stringify(data)
+				data : JSON.stringify({
+					email : $("#loginEmail").val(),
+					password : $("#loginPass").val()
+				})
 			})
 			.success(function (response) {
 				if (response.err) {
@@ -108,7 +109,9 @@ App.View.Home = Backbone.View.extend({
 				}
 			})
 			.fail(function (jqxhr) {
-				console.log(jqxhr);
+				if (jqxhr.status == 401) {
+					$("#invalidLogin").show();
+				}
 			})
 		}
 	}
