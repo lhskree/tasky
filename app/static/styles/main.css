@@ -200,10 +200,35 @@ Task modal popup
         border-radius: 8px;
         outline: none;
         border: none; }
+      .modal-dialog .modal-content .modal-body .modal-task .modal-comments .comments {
+        max-height: 400px;
+        overflow-y: scroll; }
+      .modal-dialog .modal-content .modal-body .modal-task .modal-comments .comment {
+        margin-bottom: .5em 0; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-comments .comment__info {
+          padding: .5em 0;
+          color: #777; }
+        .modal-dialog .modal-content .modal-body .modal-task .modal-comments .comment p {
+          padding: .5em 0 1em;
+          border-bottom: 1px solid #777; }
 
 /************************
 Homepage View
 ************************/
+#mainTitle {
+  padding: 2em;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold; }
+
+#signupMessage {
+  padding: 1em;
+  font-size: 30px;
+  text-align: center; }
+  #signupMessage .login {
+    color: #FF5A5F;
+    cursor: pointer; }
+
 #newUser,
 #login {
   width: 600px;
@@ -217,7 +242,8 @@ Homepage View
     margin: 1em auto; }
 
 #newUser #emailExists,
-#newUser #passwordMismatch {
+#newUser #passwordMismatch,
+#newUser #invalidEmail {
   display: none;
   margin: 1em auto; }
 #newUser #emailExists {

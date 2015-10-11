@@ -33,13 +33,19 @@ App.View.Task = Backbone.View.extend({
 		"click .modal-description p" : "editTaskDescription",
 		"click .modal-description .edit" : "editTaskDescription",
 		"click .modal-description .save" : "validateDescription",
-		"click .modal-description .close" : "closeTaskDescription"
+		"click .modal-description .close" : "closeTaskDescription",
+		"click .modal-comments .save" : "validateComment",
 	},
 
 	syncModel : function () {
 		this.model.save(
 			this.model.toJSON(),
 			{
+
+				headers : {
+					"Authorization" : App.helpers.getAuthHeader()
+				},
+				
 				success : function (model, response, options) {
 					// console.log("Task model synced");
 				},
@@ -70,6 +76,29 @@ App.View.Task = Backbone.View.extend({
 			// Let the user know to enter a title or hide the options
 		}
 		this.closeTaskTitle();
+	},
+
+	validateComment : function () {
+		var $comment = this.$el.find(".modal-comments textarea");
+		if ($comment.val()) {
+			var comments = this.model.get("comments");
+			var date = new Date();
+			var options = {
+			    weekday: "long", year: "numeric", month: "short",
+			    day: "numeric", hour: "2-digit", minute: "2-digit"
+			};
+			var now = date.toLocaleDateString('en-US', options);
+			var newComment = {
+				"author" : App.user,
+				"date" : now,
+				"body" : $comment.val()
+			}
+			comments.push(newComment);
+			this.model.set("comments", comments);
+			this.model.trigger('change');
+		} else {
+			// Let the user know something went wrong
+		}
 	},
 
 	closeTaskTitle : function () {

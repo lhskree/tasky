@@ -218,6 +218,21 @@ Task modal popup
 							border: none;
 						}
 					}
+					.comments {
+						max-height: 400px;
+						overflow-y: scroll;
+					}
+					.comment {
+						margin-bottom: .5em 0;
+						&__info {
+							padding: .5em 0;
+							color: $mainFL;
+						}
+						p {
+							padding: .5em 0 1em;
+							border-bottom: 1px solid $mainFL;
+						}
+					}
 				}
 			}
 		}
@@ -227,6 +242,21 @@ Task modal popup
 /************************
 Homepage View
 ************************/
+#mainTitle {
+	padding: 2em;
+	font-size: 50px;
+	text-align: center;
+	font-weight: bold;
+}
+#signupMessage {
+	padding: 1em;
+	font-size: 30px;
+	text-align: center;
+	.login {
+		color: $red;
+		cursor: pointer;
+	}
+}
 #newUser,
 #login {
 	width: 600px;
@@ -244,7 +274,8 @@ Homepage View
 
 #newUser {
 	#emailExists,
-	#passwordMismatch {
+	#passwordMismatch,
+	#invalidEmail {
 		display: none;
 		margin: 1em auto;
 	}

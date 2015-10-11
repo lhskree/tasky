@@ -58,12 +58,14 @@
 						<textarea class="col-lg-12"></textarea>
 						<button class="btn btn-success col-lg-2 save">Comment</button>
 					</div>
-					{{#each comments}}
-					<div class="comment row">
-						<h4 class="comment__author">{{this.author}}</h4>
-						<p>{{this.body}}</p>
+					<div class="comments">
+						{{#each comments}}
+						<div class="comment row">
+							<h4 class="comment__info">By {{this.author}} on {{this.date}}</h4>
+							<p>{{this.body}}</p>
+						</div>
+						{{/each}}
 					</div>
-					{{/each}}
 				</div>
 		</div>
 	</div>
@@ -73,22 +75,23 @@
 
 <script id="template-home" type="text/x-handlebars-template">
 
-<h1>Welcome to Tasky!</h1>
-<h2>Signup here</h2>
+<h1 id="mainTitle">Welcome to Tasky!</h1>
+<h2 id="signupMessage">Signup or <span class="login">Login</span></h2>
 
 <form id="newUser">
 	<div class="form-group">
 		<label for="signupEmail">Email</label>
 		<input type="email" class="form-control" id="signupEmail" placeholder="Email">
 		<div class="alert alert-warning" id="emailExists">Looks like that email already exists. Click the here to login.</div>
+		<div class="alert alert-warning" id="invalidEmail">Please make sure your email is valid.</div>
 	</div>
 	<div class="form-group">
 		<label for="signupPass1">Password</label>
 		<input type="password" class="form-control" id="signupPass1" placeholder="Password">
-		<div class="alert alert-warning" id="passwordMismatch">There was an error confirming your password. Please try again.</div>
+		<div class="alert alert-warning" id="passwordMismatch">Woah, check your passwords! Look like they don&quote;t match.</div>
 	</div>
 	<div class="form-group">
-		<label for="signupPass2">Password (Otra Vez)</label>
+		<label for="signupPass2">Confirm Password</label>
 		<input type="password" class="form-control" id="signupPass2" placeholder="Password">
 	</div>
 	<button type="submit" class="btn btn-primary">Signup</button>

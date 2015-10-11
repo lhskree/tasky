@@ -21,21 +21,22 @@ App.View.Home = Backbone.View.extend({
 		"click #showNewUser" : "showNewUser",
 		"click #login button[type='submit']" : "validateLogin",
 		"click #newUser button[type='submit']" : "validateNewUser",
-		"click #emailExists" : "showLogin"
+		"click #emailExists" : "showLogin",
+		"click #signupMessage .login" : "showLogin"
 	},
 
 	showNewUser : function (e) {
 		e.preventDefault();
-		$("#newUser").show();
-		$("#login").hide();
+		$("#newUser").slideDown('slow');
+		$("#login").slideUp('slow');
 	},
 
 	showLogin : function (e) {
 		e.preventDefault();
 		$("#emailExists").hide();
 		$("#passwordMismatch").hide();
-		$("#login").show();
-		$("#newUser").hide();
+		$("#login").slideDown('slow');
+		$("#newUser").slideUp('slow');
 	},
 
 	validateNewUser : function (e) {
@@ -79,7 +80,13 @@ App.View.Home = Backbone.View.extend({
 				.fail(function (jqxhr) {
 					console.log(jqxhr);
 				});
+			// Passwords don't match
+			} else {
+				$("#passwordMismatch").show();
 			}
+		// Invalid email address
+		} else {
+			$("#invalidEmail").show();
 		}
 	},
 

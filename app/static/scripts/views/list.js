@@ -55,6 +55,11 @@ App.View.List = Backbone.View.extend({
 		this.model.save(
 			this.model.toJSON(),
 			{
+
+				headers : {
+					"Authorization" : App.helpers.getAuthHeader()
+				},
+
 				success : function (model, response, options) {
 					console.log("Synced list");
 					console.log(model.toJSON());
