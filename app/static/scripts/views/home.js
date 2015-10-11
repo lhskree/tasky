@@ -18,12 +18,21 @@ App.View.Home = Backbone.View.extend({
 
 	events : {
 		"click #showLogin" : "showLogin",
+		"click #showNewUser" : "showNewUser",
 		"click #login button[type='submit']" : "validateLogin",
 		"click #newUser button[type='submit']" : "validateNewUser"
 	},
 
-	showLogin : function () {
+	showNewUser : function (e) {
+		e.preventDefault();
+		$("#newUser").show();
+		$("#login").hide();
+	},
+
+	showLogin : function (e) {
+		e.preventDefault();
 		$("#login").show();
+		$("#newUser").hide();
 	},
 
 	validateNewUser : function (e) {

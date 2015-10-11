@@ -65,7 +65,6 @@
 
 <h1>Welcome to Tasky!</h1>
 <h2>Signup here</h2>
-<h3 id="showLogin">Already have an account? Click here to login</h3>
 
 <form id="newUser">
 	<div class="form-group">
@@ -80,7 +79,8 @@
 		<label for="signupPass2">Password (Otra Vez)</label>
 		<input type="password" class="form-control" id="signupPass2" placeholder="Password">
 	</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-primary">Signup</button>
+	<button class="btn btn-link" id="showLogin">Already have an account?</button>
 </form>
 
 <form id="login">
@@ -92,7 +92,8 @@
 		<label for="loginPass">Password</label>
 		<input type="password" class="form-control" id="loginPass" placeholder="Password">
 	</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-primary">Login</button>
+	<button class="btn btn-link" id="showNewUser">Show Signup Form</button>
 </form>
 
 </script>

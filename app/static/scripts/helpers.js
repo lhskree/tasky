@@ -26,11 +26,15 @@ App.helpers.unsetAuthToken = function () {
 }
 
 App.helpers.getBoard = function () {
+	// This should probably be it's own naviagtion . . .
 	var newList = $('<button id="newList">Add a New Task Group</button>')
-	.addClass('btn btn-primary col-lg-2 col-lg-push-5 col-md-4 col-md-push-4 col-sm-4 col-sm-push-4 col-xs-12')
+	.addClass('btn btn-primary col-lg-2');
+	var logout = $('<button id="logout">Logout</button>')
+	.addClass('btn btn-link col-lg-2');
 	$("body")
 	.append(newList)
-	.append('<div id="lists"></div>')
+	.append(logout)
+	.append('<div id="lists"></div>');
 
 	// Initial events and handlers
 	$("#newList").click(function () {

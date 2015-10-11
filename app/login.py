@@ -27,6 +27,9 @@ def login():
 				else:
 					body[key] = item[key]
 		return json.jsonify(body)
+	# Only accept JSON
+	else:
+		return make_response("", 415) # unsupported media type
 
 # the actual login page
 @app.route('/login', methods=['GET'])
