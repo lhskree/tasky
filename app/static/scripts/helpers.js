@@ -25,6 +25,17 @@ App.helpers.unsetAuthToken = function () {
 	return true;
 }
 
+App.helpers.getAuthTokenPayload = function () {
+	var token = this.getAuthToken();
+	var payload = token.split('.')[1];
+	return JSON.parse(atob(payload));
+}
+
+App.helpers.setUser = function () {
+	var payload = this.getAuthTokenPayload();
+	App.user = payload['email'];
+}
+
 App.helpers.getBoard = function () {
 	// This should probably be it's own naviagtion . . .
 	var newList = $('<button id="newList">Add a New Task Group</button>')
@@ -47,6 +58,8 @@ App.helpers.getBoard = function () {
 	$("#logout").click(function () {
 		App.helpers.unsetAuthToken();
 		window.location = "/";
+		// Unset user
+		App.user = null;
 	})
 
 	$.ajax("/api/lists?all=true", {

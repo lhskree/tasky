@@ -18,6 +18,8 @@ $(function () {
 			)
 			.success(function() {
 				App.helpers.getBoard();
+				// Sets up the current user in App.user
+				App.helpers.setUser();
 				// Get rid of the home view
 				home.remove();
 			}).fail(function (err, jqxhr) {
