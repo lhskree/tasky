@@ -40,10 +40,10 @@ def check_auth():
 	else:
 		return make_response("", 200)
 
-# makes a JWT with a sub
-def generate_token(sub):
-	payload = {
-		"iss" : "tasky:5000",
-		"sub" : sub,
-	}
+# makes a JWT from a dictionary
+def generate_token(params):
+	payload = {}
+	for key in params:
+		payload[key] = params[key]
+	payload['iss'] = "tasky:5000"
 	return jwt.encode(payload, app.secret, algorithm='HS256')

@@ -10,40 +10,61 @@ from auth import generate_token
 @app.route('/api/user', methods=['GET', 'DELETE', 'POST']) # GET + DELETE for debugging only!
 def user():
 
+	# This should be the only method that's kept
 	if request.method == 'POST':
 		if request.headers['Content-Type'] == 'application/json':
 			body = request.json
-			# Validate username - check for uniqueness
-			# Validate password
-			# pass to bytes
-			if not body['signupPass1'] == body['signupPass2']:
-				return False # another error response
+
+			# Validate email
 			email = body['signupEmail']
+			email_exists = mongo.app.users.find_one({
+				"email" : email
+				})
+			if email_exists:
+				return make_response(json.jsonify({
+					"err" : True,
+					"typ" : "EmailExists"
+					}))
+
+			# Validate password
+			if not body['signupPass1'] == body['signupPass2']:
+				return make_response(json.jsonify({
+					"err" : True,
+					"typ" : "PasswordMismatch"
+					}), 200)
+
+			# Encode / hash password
 			password = body['signupPass1'].encode('utf-8')
 			hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+
+			# Write query
 			user = {
 				"email" : email,
 				"password" : hashed.encode('utf-8')
 			}
+
+			# Write new accout to DB
 			write_result = mongo.app.users.insert(user)
+
+			# Success! Generate and return a JWT
 			if isinstance(write_result, ObjectId):
-				# Return the encoded oid to reference for the tasks
-				token = generate_token(email)
+				oid = base64.b64encode(str(write_result))
+				token = generate_token({
+					"email" : email,
+					"oid" : oid
+					})
 				return make_response(json.jsonify({
 					"token" : token,
-					"email" : email
 					}), 200)
+			# Not so great, write error
 			else:
 				return json.jsonify({
-					"error" : "Could not write user to DB"
+					"err" : True,
+					"typ" : "MongoWriteError"
 					})
+		# Only accept JSON
 		else:
-			response = make_response(json.jsonify({
-				"error" : True
-				}))
-			response.status_code = 415 # unsupported media type
-			response.headers['Content-Type'] = 'application/json'
-			return response
+			return make_response("", 415) # unsupported media type
 
 	# GET all users
 	elif request.method == 'GET':
