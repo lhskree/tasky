@@ -55,15 +55,25 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   color: #087E8B;
   text-align: center; }
 
-#newList {
+#navigation {
   position: fixed;
   top: 0;
-  left: 0; }
-
-#logout {
-  position: fixed;
-  top: 0;
-  right: 0; }
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: .5em;
+  border-bottom: 1px solid #087E8B; }
+  #navigation h1 {
+    text-align: center;
+    font-size: 1.2em; }
+  #navigation #newList {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  #navigation #logout {
+    position: absolute;
+    top: 0;
+    right: 0; }
 
 #lists {
   padding: 5%;

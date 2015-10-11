@@ -37,30 +37,19 @@ App.helpers.setUser = function () {
 }
 
 App.helpers.getBoard = function () {
-	// This should probably be it's own naviagtion . . .
-	var newList = $('<button id="newList">Add a New Task Group</button>')
-	.addClass('btn btn-primary col-lg-2');
-	var logout = $('<button id="logout">Logout</button>')
-	.addClass('btn btn-link col-lg-2');
-	$("body")
-	.append(newList)
-	.append(logout)
-	.append('<div id="lists"></div>');
 
-	// Initial events and handlers
-	$("#newList").click(function () {
-		var list = new App.Model.List();
-		var listView = new App.View.List({
-			model : list,
-		});
-	});
+	$("body").append('<div id="lists"></div>');
 
-	$("#logout").click(function () {
-		App.helpers.unsetAuthToken();
-		window.location = "/";
-		// Unset user
-		App.user = null;
+	// Make the navigation
+	// This should be passed a user model later with information about the logged-in user
+	this.setUser();
+	var user = new App.Model.User({
+		"user" : App.user
 	})
+	console.log(user)
+	var nav = new App.View.Nav({
+		model : user
+	});
 
 	$.ajax("/api/lists?all=true", {
 		method : "GET",

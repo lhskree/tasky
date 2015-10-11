@@ -32,16 +32,28 @@ body {
 	}
 }
 
-#newList {
+#navigation {
 	position: fixed;
 	top: 0;
 	left: 0;
-}
-
-#logout {
-	position: fixed;
-	top: 0;
-	right: 0;
+	width: 100%;
+	margin: 0;
+	padding: .5em;
+	border-bottom: 1px solid $teal;
+	h1 {
+		text-align: center;
+		font-size: 1.2em;
+	}
+	#newList {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#logout {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 }
 
 #lists {
