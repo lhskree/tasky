@@ -58,10 +58,10 @@ def user():
 					}), 200)
 			# Not so great, write error
 			else:
-				return json.jsonify({
+				return make_response(json.jsonify({
 					"err" : True,
 					"typ" : "MongoWriteError"
-					})
+					}), 200)
 		# Only accept JSON
 		else:
 			return make_response("", 415) # unsupported media type

@@ -30,7 +30,6 @@ App.View.Home = Backbone.View.extend({
 		e.preventDefault();
 		if ($("#signupEmail").val() && $("#signupPass1").val()) {
 			if ($("#signupPass1").val() == $("#signupPass2").val()) {
-				console.log("TACOCOCOC");
 				$.ajax("/api/user", {
 					method : "POST",
 					contentType : "application/json",
@@ -40,8 +39,26 @@ App.View.Home = Backbone.View.extend({
 						"signupPass2" : $("#signupPass2").val()
 					})
 				})
-				.success(function (data) {
-					console.log(data);
+				.success(function (response) {
+					if (response.err) {
+						switch (response.typ) {
+							case("EmailExists"):
+								$("#emailExists").show();
+								break;
+							case("PasswordMismatch"):
+								$("passwordMismatch").show();
+								break;
+							case("MongoWriteError"):
+								// Handle in ui?
+								break;
+							default:
+								// Shouldn't ever get here
+						}
+					}
+					if (response.token) {
+						App.helpers.setAuthToken(response.token);
+						App.helpers.getBoard();
+					}
 				})
 				.fail(function (jqxhr) {
 					console.log(jqxhr);
