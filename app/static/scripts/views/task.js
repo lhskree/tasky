@@ -122,9 +122,7 @@ App.View.Task = Backbone.View.extend({
 	},
 
 	updateParent : function () {
-		console.log("updating parent")
 		var tasks = this.parentView.model.get("tasks");
-		console.log(tasks);
 		var idx = _.findIndex(tasks, {
 			"title" : this.model.previous("title"),
 			"oid" : this.model.previous("oid") || this.model.cid
