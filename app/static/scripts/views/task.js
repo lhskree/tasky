@@ -122,7 +122,9 @@ App.View.Task = Backbone.View.extend({
 	},
 
 	updateParent : function () {
-		var tasks = this.model.parent.get("tasks");
+		console.log("updating parent")
+		var tasks = this.parentView.model.get("tasks");
+		console.log(tasks);
 		var idx = _.findIndex(tasks, {
 			"title" : this.model.previous("title"),
 			"oid" : this.model.previous("oid") || this.model.cid
@@ -132,8 +134,8 @@ App.View.Task = Backbone.View.extend({
 			"oid" : this.model.get("oid") || this.model.cid,
 			"unsaved" : this.model.isNew()
 		};
-		this.model.parent.set("tasks", tasks);
-		this.model.parent.trigger('change', this.model.parent);
+		this.parentView.model.set("tasks", tasks);
+		this.parentView.model.trigger('change', this.parentView);
 	}
 
 

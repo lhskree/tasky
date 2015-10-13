@@ -133,36 +133,22 @@ App.View.List = Backbone.View.extend({
 		taskList.forEach(function (t) {
 			// Only load tasks that have been saved, otherwise they won't have
 			// a proper oid in mongo
-			if (!t.unsaved) {
-				var task = new App.Model.Task({
-					"oid" : t.oid
-				});
-				task.fetch({
-					success : function () {
-						task.parent = which.model;
-						which.childViews.push(task);
-						// Create the modal view
-						var taskView = new App.View.Task({
-							model : task,
-						});
-					},
-
-					error : function(err) {
-						console.log(err);
-					}
-				});
-			} else {
-				// Generate another blank, generic task view
-				var task = new App.Model.Task({
-					parentList : which.model.get("title"),
-					parentOID : which.model.id,
-					title : "Edit the title"
-				});
-				task.parent = which.model;
-				var taskView = new App.View.Task({
-					model : task,
-				});
-			}
+			var task = new App.Model.Task({
+				"oid" : t.oid
+			});
+			task.fetch({
+				success : function () {
+					// Create the modal view
+					var taskView = new App.View.Task({
+						model : task,
+					});
+					which.childViews.push(taskView);
+					task.parentView = which;
+				},
+				error : function(err) {
+					console.log(err);
+				}
+			});
 		});
 	},
 
