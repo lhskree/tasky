@@ -110,9 +110,8 @@ App.View.Home = Backbone.View.extend({
 					}
 				}
 				if (response.token) {
-					App.helpers.setAuthToken(response.token);
-					App.helpers.getBoard();
-					App.helpers.setUser();
+					App.View.Application.setAuthToken(response.token);
+					which.parent.getBoard();
 					// Destroy this view
 					which.remove();
 				}
