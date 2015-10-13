@@ -27,13 +27,13 @@ App.View.Nav = Backbone.View.extend({
 		var listView = new App.View.List({
 			model : list,
 		});
+		// The parent of the new list is the instance of the App.View.Application
+		listView.parentView = this.parentView;
 	},
 
 	logout : function () {
-		App.helpers.unsetAuthToken();
+		App.View.Applicaiton.unsetAuthToken();
 		window.location = "/";
-		// Unset user
-		App.user = null;
 	}
 
 })

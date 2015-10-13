@@ -43,9 +43,9 @@ App.View.Task = Backbone.View.extend({
 			{
 
 				headers : {
-					"Authorization" : App.helpers.getAuthHeader()
+					"Authorization" : App.View.Application.getAuthHeader()
 				},
-				
+
 				success : function (model, response, options) {
 					// console.log("Task model synced");
 				},

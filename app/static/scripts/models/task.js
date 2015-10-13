@@ -8,7 +8,7 @@ App.Model.Task = Backbone.Model.extend({
 	idAttribute : "oid",
 
 	defaults : {
-		"title" : "",
+		"title" : "Edit the title",
 		"parentList" : "",
 		"parentOID" : "",
 		"description" : " ",

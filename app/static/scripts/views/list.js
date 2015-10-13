@@ -16,7 +16,7 @@ App.View.List = Backbone.View.extend({
 		$("#lists").prepend(this.$el);
 
 		// Load and render subviews, if applicable
-		this.children = [];
+		this.childViews = [];
 		this.loadTasks();
 
 		// Bind render on change
@@ -57,7 +57,7 @@ App.View.List = Backbone.View.extend({
 			{
 
 				headers : {
-					"Authorization" : App.helpers.getAuthHeader()
+					"Authorization" : App.View.Application.getAuthHeader()
 				},
 
 				success : function (model, response, options) {
@@ -96,29 +96,27 @@ App.View.List = Backbone.View.extend({
 			title : "Edit the title"
 			// This tells loadTasks to ignore this unsaved task if the page is closed and reopened
 		});
-		this.children.push(task);
 
 		// Add this new task to this model's list of tasks
 		var tasks = this.model.get("tasks");
 		tasks.push({
-			"title" : "Edit the title",
+			"title" : task.get("title"),
 			"oid" : task.cid,
-			unsaved : true
 		});
+		// This won't trigger a change in the list model,
+		// which is good since the new task model hasn't been synced;
+		// we don't want it saved, yet!
 		this.model.set("tasks", tasks);
-		this.model.trigger('change', this.model);
-
-		// Syncing at this point will save a new task with the unsaved flag,
-		// which will be ignored by loadTasks
-		if (this.model.isNew()) this.syncModel();
-
-		// Bind parent model to child model (for updating the parent from the child)
-		task.parent = this.model;
+		// We do, however, want it rendered
+		this.render();
 
 		// Create the task's view
 		var taskView = new App.View.Task({
 			model : task,
 		});
+		// Bind parent / children views for updating subviews
+		taskView.parentView = this;
+		this.childViews.push(taskView);
 	},
 
 	// Iterates over children (task models) and updates their title
@@ -142,7 +140,7 @@ App.View.List = Backbone.View.extend({
 				task.fetch({
 					success : function () {
 						task.parent = which.model;
-						which.children.push(task);
+						which.childViews.push(task);
 						// Create the modal view
 						var taskView = new App.View.Task({
 							model : task,

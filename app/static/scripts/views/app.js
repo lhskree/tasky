@@ -10,7 +10,7 @@ App.View.Application = Backbone.View.extend(
 	initialize : function () {
 		if (!App.View.Application.getAuthToken()) {
 			var home = new App.View.Home();
-			home.parent = this;
+			home.parentView = this;
 		} else {
 			this.checkOldToken(App.View.Application.getAuthToken());
 		}
@@ -49,14 +49,18 @@ App.View.Application = Backbone.View.extend(
 		var payload = App.View.Application.getAuthTokenPayload(App.View.Application.getAuthToken());
 
 		var user = new App.Model.User({
-			"user" : payload.email
+			"email" : payload.email
 		});
-		user.parent = this;
 
-		var nav = new App.View.Nav({
+		var userView = new App.Model.User({
 			model : user
 		});
-		user.parent = this;
+		userView.parentView = this;
+
+		var navView = new App.View.Nav({
+			model : user
+		});
+		navView.parentView = this;
 
 		this.getLists();
 
