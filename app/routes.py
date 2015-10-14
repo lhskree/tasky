@@ -6,7 +6,6 @@ from . import tasks
 from . import lists
 from . import login
 from . import logout
-from . import token
 from . import user
 
 # Authorization decorators and functions

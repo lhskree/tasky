@@ -35,8 +35,7 @@ App.View.List = Backbone.View.extend({
 		"click .list__title .title" : "showListOptions",
 		"click .list__title .save" : "validateTitle",
 		"click .list__title .close" : "hideListOptions",
-		"click .tasks__new" : "createNewTask",
-		"click .task__quickOptions" : "showQuickOptions"
+		"click .tasks__new" : "createNewTask"
 	},
 
 	validateTitle : function () {
@@ -151,15 +150,5 @@ App.View.List = Backbone.View.extend({
 			});
 		});
 	},
-
-	showQuickOptions : function (e) {
-		var $target = $(e.currentTarget);
-		$target.siblings(".quickOptions").toggleClass("quickOptions--visible");
-	},
-
-	hideQuickOptions : function (e) {
-		var $target = $(e.currentTarget);
-		$target.siblings(".quickOptions").removeClass("quickOptions--visible");
-	}
 
 });

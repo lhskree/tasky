@@ -1,5 +1,3 @@
-</script>
-
 <script id="template-list" type="text/x-handlebars-template">
 
 <div class="list__title">
@@ -61,7 +59,7 @@
 					<div class="comments">
 						{{#each comments}}
 						<div class="comment row">
-							<h4 class="comment__info">By {{this.author}} on {{this.date}}</h4>
+							<h4 class="comment__info">By <span data-display-name="text">{{this.author}}</span> on {{this.date}}</h4>
 							<p>{{this.body}}</p>
 						</div>
 						{{/each}}
@@ -118,7 +116,16 @@
 
 <div id="navigation">
 	<button id="newList" class="btn btn-link col-lg-2">Add a New Task Group</button>
-	<h1>Welcome, {{user}}!</h1>
+	
+	<div id="#editDisplayName">
+		<h1>Welcome, <span id="displayName">{{user}}</span>!</h1>
+		<div class=".editor">
+			<input type="text" id="displayNameInput">
+			<button class="btn btn-success col-lg-4 save">Save</button>
+			<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
+		</div>
+	</div>
+
 	<button id="logout" class="btn btn-link col-lg-2">Logout</button>
 </div>
 
