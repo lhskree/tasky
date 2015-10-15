@@ -1,0 +1,4 @@
+Flask>=0.10.0
+PyMongo>=2.9.0
+bcrypt>=1.1.0
+PyJWT>=1.4.0
