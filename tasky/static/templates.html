@@ -1,0 +1,132 @@
+<script id="template-list" type="text/x-handlebars-template">
+
+<div class="list__title">
+	<h2 class="title">{{title}}</h2>
+	<div class="editor row">
+		<input type="text" class="col-lg-12" placeholder="Click to Change the Title" value="{{title}}">
+		<button class="btn btn-success col-lg-4 save">Save</button>
+		<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
+	</div>
+</div>
+
+<div class="tasklist">
+	{{#each tasks}}
+		<div class="task">
+			<h4 class="task__title" data-toggle="modal" data-target="#{{this.oid}}">{{this.title}}</h4>
+		</div>
+	{{/each}}
+</div>
+
+<a class="tasks__new">Add a new task . . .</a>
+
+</script>
+
+<script id="template-task" type="text/x-handlebars-template">
+
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-body">
+			<div class="modal-task">
+				<span class="modal-close glyphicon glyphicon-remove" data-dismiss="modal"></span>
+
+				<div class="modal-title">
+					<h3>{{title}}</h3>
+					<div class="editor row">
+						<input type="text" placeholder="Edit task title" value="{{title}}">
+						<button class="btn btn-success col-lg-4 save">Save</button>
+						<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
+					</div>
+					<span>in list </span>
+					<span class="parentList">{{parentList}}</span>
+				</div>
+
+				<div class="modal-description">
+					<h4>Description</h4><span class="edit">Edit</span>
+					<p>{{description}}</p>
+					<div class="editor row">
+						<textarea class="description" placeholder="Enter a description">{{description}}</textarea>
+						<button class="btn btn-success col-lg-4 save">Save</button>
+						<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
+					</div>
+				</div>
+
+				<div class="modal-comments">
+					<h3>Comments</h3>
+					<div class="row addComment editor editor--show">
+						<textarea class="col-lg-12"></textarea>
+						<button class="btn btn-success col-lg-2 save">Comment</button>
+					</div>
+					<div class="comments">
+						{{#each comments}}
+						<div class="comment row">
+							<h4 class="comment__info">By <span data-display-name="text">{{this.author}}</span> on {{this.date}}</h4>
+							<p>{{this.body}}</p>
+						</div>
+						{{/each}}
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+</script>
+
+<script id="template-home" type="text/x-handlebars-template">
+
+<h1 id="mainTitle">Welcome to Tasky!</h1>
+<h2 id="signupMessage">Signup or <span class="login">Login</span></h2>
+
+<form id="newUser">
+	<div class="form-group">
+		<label for="signupEmail">Email</label>
+		<input type="email" class="form-control" id="signupEmail" placeholder="Email">
+		<div class="alert alert-warning" id="emailExists">Looks like that email already exists. Click the here to login.</div>
+		<div class="alert alert-warning" id="invalidEmail">Please make sure your email is valid.</div>
+	</div>
+	<div class="form-group">
+		<label for="signupPass1">Password</label>
+		<input type="password" class="form-control" id="signupPass1" placeholder="Password">
+		<div class="alert alert-warning" id="passwordMismatch">Woah, check your passwords! Look like they don&quote;t match.</div>
+	</div>
+	<div class="form-group">
+		<label for="signupPass2">Confirm Password</label>
+		<input type="password" class="form-control" id="signupPass2" placeholder="Password">
+	</div>
+	<button type="submit" class="btn btn-primary">Signup</button>
+	<button class="btn btn-link" id="showLogin">Already have an account?</button>
+</form>
+
+<form id="login">
+	<div class="alert alert-danger" id="invalidLogin">User not found or password mismatch. Please try again.</div>
+	<div class="form-group">
+		<label for="loginEmail">Email</label>
+		<input type="email" class="form-control" id="loginEmail" placeholder="Email">
+	</div>
+	<div class="form-group">
+		<label for="loginPass">Password</label>
+		<input type="password" class="form-control" id="loginPass" placeholder="Password">
+	</div>
+	<button type="submit" class="btn btn-primary">Login</button>
+	<button class="btn btn-link" id="showNewUser">Show Signup Form</button>
+</form>
+
+</script>
+
+<script id="template-nav" type="text/x-handlebars-template">
+
+<div id="navigation">
+	<button id="newList" class="btn btn-link col-lg-2">Add a New Task Group</button>
+	
+	<div id="#editDisplayName">
+		<h1>Welcome, <span id="displayName">{{user}}</span>!</h1>
+		<div class=".editor">
+			<input type="text" id="displayNameInput">
+			<button class="btn btn-success col-lg-4 save">Save</button>
+			<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
+		</div>
+	</div>
+
+	<button id="logout" class="btn btn-link col-lg-2">Logout</button>
+</div>
+
+</script>
