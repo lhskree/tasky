@@ -1,4 +1,4 @@
-from app import app, mongo
+from tasky import app, mongo
 from flask import request, json
 from bson.objectid import ObjectId
 

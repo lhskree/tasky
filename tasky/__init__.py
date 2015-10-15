@@ -8,4 +8,4 @@ mongo = MongoClient('localhost', 27017)
 # plus env var
 app.secret = "dankMemes"
 
-from . import routes
+import routes

@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, make_response, json
-from app import app
+from tasky import app
 
 import base64
 import bcrypt
