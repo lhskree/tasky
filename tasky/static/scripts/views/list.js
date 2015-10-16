@@ -61,7 +61,6 @@ App.View.List = Backbone.View.extend({
 
 				success : function (model, response, options) {
 					console.log("Synced list");
-					console.log(model.toJSON());
 				},
 
 				error : function (model, response, options) {
@@ -136,6 +135,11 @@ App.View.List = Backbone.View.extend({
 				"oid" : t.oid
 			});
 			task.fetch({
+
+				headers : {
+					"Authorization" : App.View.Application.getAuthHeader()
+				},
+
 				success : function () {
 					// Create the modal view
 					var taskView = new App.View.Task({

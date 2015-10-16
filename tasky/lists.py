@@ -86,6 +86,7 @@ def lists():
 
 # List requests on a single list
 @app.route('/api/lists/<string:oid>', methods=['GET', 'PUT', 'DELETE'])
+@requires_auth
 def single_list(oid):
 
 	# GET a list by oid

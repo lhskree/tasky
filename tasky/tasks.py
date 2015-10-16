@@ -2,10 +2,13 @@ from tasky import app, mongo
 from flask import request, json
 from bson.objectid import ObjectId
 
+from auth import *
+
 import base64
 
 # Tasks API
 @app.route('/api/tasks', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@requires_auth
 def tasks():
 
 	# GET
@@ -87,6 +90,7 @@ def tasks():
 
 # List requests on a single list
 @app.route('/api/tasks/<string:oid>', methods=['GET', 'PUT', 'DELETE'])
+@requires_auth
 def single_task(oid):
 
 	# GET a list by oid
