@@ -1,10 +1,6 @@
 # Tasky
 
-==============
-
 ## A Trello clone for task management but without all those pesky features.
-
---------------
 
 Messing around with Python Flask. Will work on more features once the core ideas are there. Might turn into something else - who knows!
 
@@ -24,3 +20,5 @@ python server.py
 Then head on over to
 
 localhost:5000
+
+Made by @logalleon / lhskree / Logan Sobczak
