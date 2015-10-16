@@ -5,7 +5,6 @@ from flask import request
 from . import tasks
 from . import lists
 from . import login
-from . import logout
 from . import user
 
 # Authorization decorators and functions
