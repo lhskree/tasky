@@ -15,10 +15,11 @@ pip install -r requirements.txt
 ### Run
 
 mongod (on the default port:27017)
+
 python server.py
 
 Then head on over to
 
 localhost:5000
 
-Made by @logalleon / lhskree / Logan Sobczak
+#### Made with &#9829; by @logalleon / lhskree / Logan Sobczak
