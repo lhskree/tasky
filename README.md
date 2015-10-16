@@ -1,8 +1,8 @@
-Tasky
+# Tasky
 
 ==============
 
-A Trello clone for task management but without all those pesky features.
+## A Trello clone for task management but without all those pesky features.
 
 --------------
 
