@@ -25,9 +25,10 @@ App.View.Nav = Backbone.View.extend({
 	events : {
 		"click #newList" : "createNewList",
 		"click #logout" : "logout",
-		"click #editDisplayName" : "editDisplayName",
+		"click #editDisplayName h1" : "editDisplayName",
 		"click #editDisplayName .close" : "closeDisplayName",
-		"click #editDisplayName .save" : "validateDisplayName"
+		"click #editDisplayName .save" : "validateDisplayName",
+		"keydown #editDisplayName input" : "updateDisplayName"
 	},
 
 	syncModel : function () {
@@ -60,18 +61,20 @@ App.View.Nav = Backbone.View.extend({
 	},
 
 	logout : function () {
-		App.View.Applicaiton.unsetAuthToken();
+		App.View.Application.unsetAuthToken();
 		window.location = "/";
 	},
 
 	editDisplayName : function () {
-		$("#editDisplayName").hide();
-		$("#editDisplayName .editor").addClass('editor--show');
+		this.$el.find("#editDisplayName .editor").addClass('editor--show');
 	},
 
 	closeDisplayName : function () {
-		$("#editDisplayName").show();
-		$("#editDisplayName .editor").removeClass('editor--show');
+		this.$el.find("#editDisplayName .editor").removeClass('editor--show');
+	},
+
+	updateDisplayName : function () {
+		
 	}
 
 })

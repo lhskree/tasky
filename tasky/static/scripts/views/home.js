@@ -22,7 +22,8 @@ App.View.Home = Backbone.View.extend({
 		"click #login button[type='submit']" : "validateLogin",
 		"click #newUser button[type='submit']" : "validateNewUser",
 		"click #emailExists" : "showLogin",
-		"click #signupMessage .login" : "showLogin"
+		"click #signupMessage .login" : "showLogin",
+		"click #signupMessage .signup" : "showNewUser"
 	},
 
 	showNewUser : function (e) {
@@ -110,7 +111,7 @@ App.View.Home = Backbone.View.extend({
 				}
 				if (response.token) {
 					App.View.Application.setAuthToken(response.token);
-					which.parent.getBoard();
+					which.parentView.getBoard();
 					// Destroy this view
 					which.remove();
 				}

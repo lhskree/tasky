@@ -5,6 +5,10 @@ App.Model.User = Backbone.Model.extend({
 
 	urlRoot : "/api/user",
 
-	idAttribute : "oid"
+	idAttribute : "oid", 
+
+	defaults : {
+		displayName : ""
+	}
 
 });

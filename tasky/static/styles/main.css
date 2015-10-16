@@ -68,7 +68,12 @@ Top Navigation
   width: 100%;
   margin: 0;
   padding: 1em;
-  border-bottom: 1px solid #FF5A5F; }
+  border-bottom: 1px solid #FF5A5F;
+  background-color: #F5F5F5; }
+  #navigation #displayName {
+    cursor: pointer; }
+    #navigation #displayName:hover {
+      color: #FF5A5F; }
   #navigation h1 {
     text-align: center;
     font-size: 1.2em; }
@@ -80,6 +85,9 @@ Top Navigation
     position: absolute;
     top: 0;
     right: 0; }
+  #navigation .editor {
+    width: 300px;
+    margin: 0 auto; }
 
 /************************
 List view
@@ -225,9 +233,14 @@ Homepage View
   padding: 1em;
   font-size: 30px;
   text-align: center; }
-  #signupMessage .login {
-    color: #FF5A5F;
+  #signupMessage .login,
+  #signupMessage .signup {
+    color: #8E7B99;
     cursor: pointer; }
+    #signupMessage .login:hover,
+    #signupMessage .signup:hover {
+      color: #FF5A5F;
+      transition: 0.7s; }
 
 #newUser,
 #login {
@@ -235,19 +248,19 @@ Homepage View
   display: block;
   margin: 0 auto; }
 
-#login {
-  display: none; }
-  #login #invalidLogin {
-    display: none;
-    margin: 1em auto; }
-
-#newUser #emailExists,
-#newUser #passwordMismatch,
-#newUser #invalidEmail {
+#login #invalidLogin {
   display: none;
   margin: 1em auto; }
-#newUser #emailExists {
-  cursor: pointer; }
+
+#newUser {
+  display: none; }
+  #newUser #emailExists,
+  #newUser #passwordMismatch,
+  #newUser #invalidEmail {
+    display: none;
+    margin: 1em auto; }
+  #newUser #emailExists {
+    cursor: pointer; }
 
 /************************
 Generic save / close editor dialog

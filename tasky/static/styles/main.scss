@@ -14,6 +14,7 @@ $slate: #313638;
 $offwhite: #F5F5F5;
 $red: #FF5A5F;
 $tan: #ccc;
+$mauve: #8E7B99;
 
 $tran: .7s;
 
@@ -46,6 +47,13 @@ Top Navigation
 	margin: 0;
 	padding: 1em;
 	border-bottom: 1px solid $red;
+	background-color: $offwhite;
+	#displayName {
+		cursor: pointer;
+		&:hover {
+			color: $red;
+		}
+	}
 	h1 {
 		text-align: center;
 		font-size: 1.2em;
@@ -59,6 +67,10 @@ Top Navigation
 		position: absolute;
 		top: 0;
 		right: 0;
+	}
+	.editor {
+		width: 300px;
+		margin: 0 auto;
 	}
 }
 
@@ -252,9 +264,14 @@ Homepage View
 	padding: 1em;
 	font-size: 30px;
 	text-align: center;
-	.login {
-		color: $red;
+	.login,
+	.signup {
+		color: $mauve;
 		cursor: pointer;
+		&:hover {
+			color: $red;
+			transition: $tran;
+		}
 	}
 }
 #newUser,
@@ -265,7 +282,6 @@ Homepage View
 }
 
 #login {
-	display: none;
 	#invalidLogin {
 		display: none;
 		margin: 1em auto;
@@ -273,6 +289,7 @@ Homepage View
 }
 
 #newUser {
+	display: none;
 	#emailExists,
 	#passwordMismatch,
 	#invalidEmail {

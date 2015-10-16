@@ -74,9 +74,10 @@
 <script id="template-home" type="text/x-handlebars-template">
 
 <h1 id="mainTitle">Welcome to Tasky!</h1>
-<h2 id="signupMessage">Signup or <span class="login">Login</span></h2>
+<h2 id="signupMessage"><span class="signup">Signup</span> or <span class="login">Login</span></h2>
 
 <form id="newUser">
+	<h3 class="text-center">Signup</h3>
 	<div class="form-group">
 		<label for="signupEmail">Email</label>
 		<input type="email" class="form-control" id="signupEmail" placeholder="Email">
@@ -97,6 +98,7 @@
 </form>
 
 <form id="login">
+	<h3 class="text-center">Login</h3>
 	<div class="alert alert-danger" id="invalidLogin">User not found or password mismatch. Please try again.</div>
 	<div class="form-group">
 		<label for="loginEmail">Email</label>
@@ -117,10 +119,10 @@
 <div id="navigation">
 	<button id="newList" class="btn btn-link col-lg-2">Add a New Task Group</button>
 	
-	<div id="#editDisplayName">
-		<h1>Welcome, <span id="displayName">{{user}}</span>!</h1>
-		<div class=".editor">
-			<input type="text" id="displayNameInput">
+	<div id="editDisplayName">
+		<h1>Welcome, <span id="displayName">{{displayName}}</span>!</h1>
+		<div class="editor">
+			<input type="text" id="displayNameInput" placeholder="Edit display name" value={{displayName}}>
 			<button class="btn btn-success col-lg-4 save">Save</button>
 			<button class="btn col-lg-2 close"><span class="glyphicon glyphicon-remove"></span></button>
 		</div>

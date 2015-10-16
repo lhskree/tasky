@@ -49,7 +49,8 @@ App.View.Application = Backbone.View.extend(
 		var payload = App.View.Application.getAuthTokenPayload(App.View.Application.getAuthToken());
 
 		var user = new App.Model.User({
-			"email" : payload.email
+			"email" : payload.email,
+			"displayName" : payload.email
 		});
 
 		var userView = new App.Model.User({
