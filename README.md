@@ -22,4 +22,4 @@ Then head on over to
 
 localhost:5000
 
-#### Made with &#9829; by @logalleon / lhskree / Logan Sobczak
+Made with &#9829; by @logalleon / lhskree / Logan Sobczak
