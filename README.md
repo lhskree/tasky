@@ -1,18 +1,26 @@
+Tasky
+
+==============
+
 A Trello clone for task management but without all those pesky features.
 
-works best with:
+--------------
+
+Messing around with Python Flask. Will work on more features once the core ideas are there. Might turn into something else - who knows!
+
+### Environment
 
 virtualenv, python 2.7+
 
-installs with:
+### Install
 
 pip install -r requirements.txt
 
-runs with:
+### Run
 
 mongod (on the default port:27017)
 python server.py
 
-go to:
+Then head on over to
 
 localhost:5000
